@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Horas de clase</h2>
+        </div>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-plus-sign"></span> Nueva hora de clase
+        </button>
+        <br/>
+        <br/>
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th>Nivel</th>
+                <th>Hora de clase</th>
+                <th>Hora inicio clase</th>
+                <th>Hora fin clase</th>
+            </tr>
+            <tr th:each="classHourLevel : ${classHourLevelList}">
+                <td>
+                    <span th:text="${classHourLevel.courseLevel}">PRIMARIA</span>
+                </td>
+                <td>
+                    <span th:if="${classHourLevel.classHour.toString() == 'FIRST_HOUR'}">1ª hora</span>
+                    <span th:if="${classHourLevel.classHour.toString() == 'SECOND_HOUR'}">2ª hora</span>
+                    <span th:if="${classHourLevel.classHour.toString() == 'THIRD_HOUR'}">3ª hora</span>
+                    <span th:if="${classHourLevel.classHour.toString() == 'FOURTH_HOUR'}">4ª hora</span>
+                    <span th:if="${classHourLevel.classHour.toString() == 'FIFTH_HOUR'}">5ª hora</span>
+                    <span th:if="${classHourLevel.classHour.toString() == 'SIXTH_HOUR'}">6ª hora</span>
+                </td>
+                <td><span th:text="${classHourLevel.classStart}">10:30</span></td>
+                <td><span th:text="${classHourLevel.classEnd}">11:30</span></td>
+                <td>
+                    <form style="display:inline-block" th:action="@{/admin/course/deleteClassHourLevel/}
+                     + ${classHourLevel.classHourLevelId}"
+                          method="post">
+                        <input type="submit" value="Eliminar"  class="btn btn-default btn-xs" />
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+        <div th:include="admin/course/modalAddClassHourLevel :: modalAddClassHourLevel"></div>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

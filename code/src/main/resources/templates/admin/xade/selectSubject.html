@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Exportar notas | <span style="color:dimgrey" th:text="${classGroup.classGroupName}" /> </h2>
+        </div>
+
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th>Asignatura</th>
+                <th>Profesor</th>
+                <th>Ev. 1</th>
+                <th>Ev. 2</th>
+                <th>Ev. 3</th>
+            </tr>
+            <tr th:each="groupSubject : ${subjectList}">
+                <td><span th:text="${groupSubject.subject.subjectName}">subject name</span></td>
+                <td><span th:text="${groupSubject.teacher.lastName}">teacher name</span></td>
+                <td><a th:href="@{/admin/xade/download/} + ${groupSubject.groupSubjectId} +@{/eval/FIRST}"
+                       class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-export"></span> Exportar</a>
+                </td>
+                <td><a th:href="@{/admin/xade/download/} + ${groupSubject.groupSubjectId} +@{/eval/SECOND}"
+                       class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-export"></span> Exportar</a>
+                </td>
+                <td><a th:href="@{/admin/xade/download/} + ${groupSubject.groupSubjectId} +@{/eval/THIRD}"
+                       class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-export"></span> Exportar</a>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <a th:href="@{/admin/xade/selectGroup}" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-arrow-left"></span></a>
+        <a th:href="@{/}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></a>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

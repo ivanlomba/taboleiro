@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="teacher/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Tareas
+                | <span style="color:dimgrey"><span th:text="${groupSubject.subject.subjectName}"> - </span>
+                <span th:text="${groupSubject.classGroup.classGroupName}"></span></span>
+            </h2>
+        </div>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTaskModal">
+            <span class="glyphicon glyphicon-plus-sign"></span> Añadir Tarea
+        </button>
+        <a th:href="@{/teacher/course/oldTask/}+${groupSubjectId}" class="btn btn-default">
+            <span class="glyphicon glyphicon-th-list"></span>
+            Tareas pasadas</a>
+        <br/>
+        <br/>
+        <div th:if="!${#lists.isEmpty(taskList)}">
+            <table class="table table-striped table-hover table-bordered">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Nombre tarea</th>
+                    <th>Asignatura</th>
+                    <th>Grupo</th>
+                </tr>
+                <tr th:each="task : ${taskList}">
+                    <td><span th:text="${task.taskDate}"></span></td>
+                    <td><b><span th:text="${task.taskName}">Examen Tema 3</span></b>
+                        </td>
+                    <td><span th:text="${task.subject.subjectName}">Lengua</span></td>
+                    <td>
+                        <span th:if="${task.taskType.toString() == 'PROJECT'}">Trabajo</span>
+                        <span th:if="${task.taskType.toString() == 'EXAM'}">Examen</span>
+                        <span th:if="${task.taskType.toString() == 'HOMEWORK'}">Deberes</span>
+                    </td>
+                    <td><span th:text="${task.classGroup.classGroupName}">Grupo</span></td>
+                    <td>
+                        <a th:href="@{/teacher/course/editTask/} + ${task.taskId}" class="btn btn-default btn-xs">
+                            Editar</a>
+                        <form style="display:inline-block" th:action="@{/teacher/course/deleteTask/} + ${task.taskId}"
+                              method="post">
+                            <input type="submit" value="Eliminar"  class="btn btn-default btn-xs" />
+                        </form></td>
+                </tr>
+            </table>
+            <nav>
+                <ul class="pager">
+                    <li th:if="!${previousPage == -1}" class="previous">
+                        <a th:href="@{/teacher/course/taskList/}+${groupSubjectId}+@{/?page=} + ${previousPage}">
+                        <span aria-hidden="true">&larr;</span> Anterior</a></li>
+                    <li th:if="!${nextPage == -1}" class="next">
+                        <a th:href="@{/teacher/course/taskList/}+${groupSubjectId}+@{/?page=} + ${nextPage}">
+                        Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
+        </div>
+        <div th:if="${#lists.isEmpty(taskList)}">
+            <div class="alert alert-info" role="alert">
+                <br/>
+                <h1 align="center"><span class="glyphicon glyphicon-folder-open"></span></h1>
+                <h2 align="center">No hay tareas para esta asignatura.</h2>
+                <br/>
+            </div>
+        </div>
+
+        <br/>
+        <br/>
+        <a th:href="@{/teacher/course/selectTaskSubject/}" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-arrow-left"></span></a>
+        <a th:href="@{/}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></a>
+        <div th:include="teacher/course/modalAddTask :: modalAddTask"></div>
+    </div>
+    <footer th:include="teacher/fragments/footer :: footer" />
+    <script src="/js/bootstrap-datepicker.min.js"></script>
+    <script src="/js/bootstrap-datepicker.es.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datePicker')
+                    .datepicker({
+                        language: "es",
+                        format: 'dd-mm-yyyy'
+                    })
+                    .on('changeDate', function(e) {
+                        // Revalidate the date field
+                        $('#eventForm').formValidation('revalidateField', 'date');
+                    });
+        });
+    </script>
+</body>
+</html>

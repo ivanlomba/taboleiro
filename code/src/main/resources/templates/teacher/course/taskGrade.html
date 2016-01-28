@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="teacher/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Calificar tarea
+                | <span style="color:dimgrey"><span th:text="${task.taskName}">Examen Trigonometría</span>
+                 - <span th:text="${task.subject.subjectName}">Matemáticas</span></span>
+            </h2>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-lg-8">
+                <table class="table table-striped table-hover table-bordered">
+                    <tr>
+                        <th>#</th>
+                        <th>Estudiante</th>
+                        <th>Calificación</th>
+                    </tr>
+                    <tr th:each="studentTaskGrade, iterStat : ${studentTaskGradeList}">
+                        <td><span th:text="${iterStat.count}">1</span></td>
+                        <td>
+                            <span th:text="${studentTaskGrade.studentFirstName}+' '+ ${studentTaskGrade.studentLastName}">
+                            </span>
+                        </td>
+                        <td>
+                            <span th:if="${studentTaskGrade.grade} == '-1'">
+                                <a th:href="@{/teacher/course/addTaskGrade/} + ${studentTaskGrade.taskId} +'/'
+                                +${studentTaskGrade.studentId}">
+                                    Añadir calificación</a>
+                            </span>
+                            <span th:unless="${studentTaskGrade.grade} == '-1'">
+                                <b>
+                                    <a th:href="@{/teacher/course/editTaskGrade/} + ${studentTaskGrade.taskId} +'/'
+                                    +${studentTaskGrade.studentId}">
+                                        <span th:text="${studentTaskGrade.grade}">7</span>
+                                    </a>
+                                </b>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <a th:href="@{/teacher/course/selectTaskSubject/}" class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-arrow-left"></span></a>
+                <a th:href="@{/}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></a>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+    <footer th:include="teacher/fragments/footer :: footer" />
+</body>
+</html>

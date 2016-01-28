@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="teacher/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="teacher/fragments/menu"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="page-header">
+                    <h2>Añadir nota global de <span th:text="${subject.subjectName}">Asignatura</span></h2>
+                    <h3>a <span th:text="${student.firstName}">Juan</span> <span th:text="${student.lastName}">Lopez</span></h3>
+                </div>
+                <form th:action="@{/teacher/course/addGlobalGrade/}+${groupSubjectId}" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                    <input type="hidden" name="student" th:value="${student.studentId}" />
+                    <input type="hidden" name="subject" th:value="${subject.subjectId}" />
+                    <div class="form-group">
+                        <label> Evaluación: </label>
+                        <select class="form-control" type="text" name="evaluation">
+                            <option value="FIRST">1ª Evaluación</option>
+                            <option value="SECOND">2ª Evaluación</option>
+                            <option value="THIRD">3ª Evaluación</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Nota: </label>
+                        <select class="form-control" id="gradeList" name="grade">
+                            <option th:each="globalGradeLevel : ${gradeList}" th:value="${globalGradeLevel.globalGradeLevelId}"
+                                    th:text="${globalGradeLevel.grade}+' ('+${globalGradeLevel.gradeName}+')'" />
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Comentario: </label>
+                        <input type="text" name="observation" class="form-control"/>
+                    </div>
+                    <input type="submit" value="Añadir nota" class="btn btn-primary"/>
+                    <a th:href="@{/teacher/course/selectSubjectGlobalGrade}" class="btn btn-default">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer th:include="teacher/fragments/footer :: footer" />
+</body>
+</html>

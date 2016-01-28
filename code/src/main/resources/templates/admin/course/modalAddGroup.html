@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<div id="modalAddGroup" th:fragment="modalAddGroup">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Crear nuevo grupo</h3>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/admin/course/createGroup}" method="post" data-toggle="validator">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="form-group">
+                            <label> Nombre del grupo:</label>
+                            <input type="text" class="form-control" name="classGroupName" required="true"/>
+                        </div>
+                        <div class="form-group" >
+                            <label> Curso : </label>
+                            <select class="form-control" id="courseList" name="course">
+                                <option th:each="course : ${courseList}" th:value="${course.courseId}"
+                                        th:text="${course.courseName}" />
+                            </select>
+                            <br/>
+                        </div>
+
+                        <div class="form-group" >
+                            <label> Tutor : </label>
+                            <select class="form-control" id="userList" name="tutor">
+                                <option th:each="user : ${userList}" th:value="${user.userId}"
+                                        th:text="${user.lastName}+', '+${user.firstName}" required="true"/>
+                            </select>
+                            <br/>
+                        </div>
+                        <div class="form-group" >
+                            <label> Ano escolar : </label>
+                            <select class="form-control" id="schoolYearList" name="schoolYear">
+                                <option th:each="schoolYear : ${schoolYearList}" th:value="${schoolYear.schoolYearId}"
+                                        th:text="${schoolYear.schoolYearName}" required="true"/>
+                            </select>
+                            <br/>
+                        </div>
+                        <div class="form-group">
+                            <label> Código grupo Xade (opcional):</label>
+                            <input type="text" class="form-control" name="codigoGrupo"/>
+                        </div>
+                        <input type="submit" value="Crear grupo" class="btn btn-primary"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+</div>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="teacher/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="teacher/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Editar tarea</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <form th:action="@{/teacher/course/editTask/}+${task.taskId}" method="post" data-toggle="validator">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <div class="form-group">
+                        <label> Nombre de la tarea: </label>
+                        <input type="text" name="taskName" class="form-control" th:field="${task.taskName}"
+                               required="true" />
+                    </div>
+                    <div class="form-group">
+                        <label> Tipo de tarea: </label>
+                        <select class="form-control" type="text" name="taskType" th:field="${task.taskType}">
+                            <option value="EXAM">Examen</option>
+                            <option value="HOMEWORK">Deberes</option>
+                            <option value="PROJECT">Trabajo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Evaluación: </label>
+                        <select class="form-control" type="text" name="evaluation" th:field="${task.evaluation}">
+                            <option value="FIRST">1ª Evaluación</option>
+                            <option value="SECOND">2ª Evaluación</option>
+                            <option value="THIRD">3ª Evaluación</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <Label> Fecha:</Label>
+                        <div class="input-group input-append date" >
+                            <input type="text" class="form-control" name="taskDate" id="datePicker" required="true"
+                                   th:value="${date}"/>
+                                <span class="input-group-addon add-on">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                        </div>
+                    </div>
+                    <!-- Subject -->
+                    <input type="hidden" name="subject" th:value="${task.subject.subjectId}" />
+                    <!-- ClassGroup -->
+                    <input type="hidden" name="classGroup" th:value="${task.classGroup.classGroupId}" />
+                    <br/>
+                    <br/>
+                    <input type="submit" value="Actualizar tarea" class="btn btn-primary"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-datepicker.min.js"></script>
+    <script src="/js/bootstrap-datepicker.es.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datePicker')
+                    .datepicker({
+                        language: "es",
+                        format: 'dd-mm-yyyy'
+                    })
+                    .on('changeDate', function(e) {
+                        // Revalidate the date field
+                        $('#eventForm').formValidation('revalidateField', 'date');
+                    });
+        });
+    </script>
+</body>
+</html>

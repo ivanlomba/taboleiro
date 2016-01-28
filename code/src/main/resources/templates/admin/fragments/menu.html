@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<div id="menu" th:fragment="menu">
+    <nav class="navbar navbar-inverse navbar-static-top" aria-expanded="false">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">
+                    <img src="/img/header_mini.png" alt="plataforma educativa" />
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a th:href="@{/admin/message/inbox}"><span class="glyphicon glyphicon-envelope"></span>
+                            Mensajería<span th:if="${newMail}!=0">
+                                <span class="label label-pill label-warning" th:text="${newMail}">3</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/admin/user/list}"><span class="glyphicon glyphicon-credit-card"></span>
+                            Usuarios</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/admin/student/list}"><span class="glyphicon glyphicon-education"></span>
+                            Estudiantes</a>
+                    </li>
+                    <li class="dropdown">
+                        <a th:href="@{/admin/user/list}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-blackboard"></span> Cursos<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/admin/course/group}">Grupos de clase</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a th:href="@{/admin/course/list}">Cursos</a></li>
+                            <li><a th:href="@{/admin/course/schoolYearList}">Años lectivos</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a th:href="@{/admin/user/list}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-book"></span>
+                            Asignaturas<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/admin/course/selectCourseSubjectList}">Asignaturas</a></li>
+                            <li><a th:href="@{/admin/course/selectGroupSubjectList}">Asignaturas por grupo</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a th:href="@{/admin/course/globalGradeLevelList}">
+                                <span class="glyphicon glyphicon-stats"></span> Notas globales</a>
+                            </li>
+                            <li><a th:href="@{/admin/xade/selectGroup}">
+                                <span class="glyphicon glyphicon-export"></span> Exportar notas (Xade)</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a th:href="@{/admin/user/list}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-calendar"></span>
+                            Horarios<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/admin/course/scheduleGroup}">
+                                <span class="glyphicon glyphicon-calendar"></span> Horarios</a>
+                            </li>
+                            <li><a th:href="@{/admin/course/classHourLevelList}">
+                                <span class="glyphicon glyphicon-time"></span> Horas de clase</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a th:href="@{/admin/user/list}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-user"></span>
+                            <span th:inline="text">
+                            [[${#httpServletRequest.remoteUser}]]</span> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/admin/user/myprofile}">Perfil</a></li>
+                            <li><form th:action="@{/logout}" method="post">
+                                    <span class="glyphicon glyphicon-off"></span>
+                                    <input type="submit" value="Cerrar sesión" class="btn-link2"/>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>

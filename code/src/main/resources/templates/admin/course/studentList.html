@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="page-header">
+                    <h2>Listado de alumnos |
+                        <span style="color:dimgrey"> <span th:text="${classGroup.classGroupName}">grupo</span></span></h2>
+                </div>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                    Matricular alumno
+                </button>
+                <br/>
+                <h3>Alumnos matriculados</h3>
+                <table class="table table-striped table-hover table-bordered">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                    </tr>
+                    <tr th:each="student : ${lista2}">
+                        <td><span th:text="${student.firstName}">Nombre</span></td>
+                        <td><span th:text="${student.lastName}">Apellidos</span></td>
+                        <td>
+                            <form style="display:inline-block" th:action="@{/admin/course/unenroll/}+
+                        ${classGroup.classGroupId}+@{/student/}+${student.studentId}"
+                                  method="post">
+                                <input type="submit" value="Desmatricular"  class="btn btn-warning btn-xs" />
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="alert alert-warning" role="alert">
+                    <p align="center">
+                        <span class="glyphicon glyphicon-info-sign"></span> <b>MOVER ALUMNOS DE GRUPO</b></p>
+                    <p align="left">Si se desea mover al alumno de grupo en mitad de un curso debe cambiarse el campo
+                        grupo actual en la opción <a th:href="@{/admin/student/list}">Editar alumno</a>. Para
+                        desmatricular un alumno, es necesario que esté previamente matriculado en otro grupo.</p>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div th:include="admin/course/modalEnroll :: modalEnroll"></div>
+        <a th:href="@{/admin/course/group}" class="btn btn-primary">Volver</a>
+        <br/>
+        <br/>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

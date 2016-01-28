@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="family/fragments/menu"></div>
+    <div class="container theme-showcase" role="main">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="jumbotron">
+                    <h3>Bienvenido/a <span th:text="${userName}">Max Power</span></h3>
+                    <h2><b><span th:text="${day}">99</span></b></h2>
+                </div>
+            </div>
+            <h4>Horario para hoy</h4>
+            <div class="col-lg-4" th:if="!${#lists.isEmpty(todaySchedule)}">
+                <table class="table table-striped table-hover table-bordered">
+                    <tr th:each="schedule : ${todaySchedule}">
+                        <td>
+                            <span th:text="${schedule.classHour.classStart}">10:30</span>
+                        </td>
+                        <td>
+                            <b><span th:text="${schedule.subject.subjectName}">Matemáticas</span></b>
+                        </td>
+                        <td>
+                            <span th:text="${schedule.classGroup.classGroupName}">1º ESO A</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-4" th:if="${#lists.isEmpty(todaySchedule)}">
+                <div class="alert alert-success" role="alert">
+                    <br/><br/><h4>¡Hoy tienes el día libre!</h4><br/><br/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6" th:if="!${#lists.isEmpty(taskList)}">
+                <div class="page-header">
+                    <h3>Próximas tareas</h3>
+                </div>
+                <div>
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Curso:</th>
+                            <th>Tarea:</th>
+                            <th>Tipo:</th>
+                            <th>Fecha:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="task : ${taskList}">
+                            <td><span th:text="${task.subject.subjectName}">Matemáticas</span></td>
+                            <td><b><span th:text="${task.taskName}">Deberes Tema 2</span></b></td>
+                            <td>
+                                <span th:if="${task.taskType.toString() == 'PROJECT'}">Trabajo</span>
+                                <span th:if="${task.taskType.toString() == 'HOMEWORK'}">Deberes</span>
+                            </td>
+                            <td><span th:text="${task.taskDate}">27/11/2015</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-6" th:if="${#lists.isEmpty(taskList)}">
+                <div class="page-header">
+                    <h3>Próximas tareas</h3>
+                </div>
+                <div class="alert alert-success" role="alert">
+                    <br/>
+                    <h3 align="center"><span class="glyphicon glyphicon-tree-conifer"></span></h3>
+                    <h4 align="center">No tienes tareas pendientes</h4>
+                    <br/>
+                </div>
+                <br/>
+            </div>
+            <div class="col-lg-6" th:if="${#lists.isEmpty(examList)}">
+                <div class="page-header">
+                    <h3>Próximos exámenes</h3>
+                </div>
+                <div class="alert alert-success" role="alert">
+                    <br/>
+                    <h3 align="center"><span class="glyphicon glyphicon-tree-conifer"></span></h3>
+                    <h4 align="center">No tienes exámenes próximos</h4>
+                    <br/>
+                </div>
+                <br/>
+            </div>
+            <div class="col-lg-6" th:unless="${#lists.isEmpty(examList)}">
+                <div class="page-header">
+                    <h3>Próximos exámenes</h3>
+                </div>
+                <div>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Asignatura:</th>
+                            <th>Tema:</th>
+                            <th>Fecha:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="task: ${examList}">
+                            <td><span th:text="${task.subject.subjectName}"></span></td>
+                            <td><b><span th:text="${task.taskName}">Examen Tema 2</span></b></td>
+                            <td><span th:text="${task.taskDate}">27/11/2015</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:include="family/fragments/footer :: footer" />
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Años escolares</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-5">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-plus-sign"></span> Nuevo año escolar
+                </button>
+                <br/>
+                <br/>
+                <table class="table table-striped table-hover table-bordered">
+                    <tr>
+                        <th>Curso</th>
+                    </tr>
+                    <tr th:each="schoolYear : ${schoolYearList}">
+                        <span th:if="${schoolYear.visible}">
+                                <td><b><span th:text="${schoolYear.schoolYearName}">UserId</span></b></td>
+                                <td class="text-center">
+                                    <form style="display:inline-block" th:action="@{/admin/course/schoolYear/hide/} +
+                                            ${schoolYear.schoolYearId}" method="post">
+                                        <input type="submit" value="Ocultar"  class="btn btn-danger btn-xs" />
+                                    </form>
+                                    <form style="display:inline-block" th:action="@{/admin/course/deleteSchoolYear/} +
+                                            ${schoolYear.schoolYearId}" method="post">
+                                        <input type="submit" value="Eliminar"  class="btn btn-default btn-xs" />
+                                    </form>
+                                </td>
+                        </span>
+                            <span th:if="!${schoolYear.visible}">
+                                <td><span th:text="${schoolYear.schoolYearName}" style="color:darkgrey">UserId</span></td>
+                                <td class="text-center">
+                                    <form style="display:inline-block" th:action="@{/admin/course/schoolYear/show/} +
+                                            ${schoolYear.schoolYearId}" method="post">
+                                        <input type="submit" value="Mostrar"  class="btn btn-success btn-xs" />
+                                    </form>
+                                    <form style="display:inline-block" th:action="@{/admin/course/deleteSchoolYear/} +
+                                            ${schoolYear.schoolYearId}" method="post">
+                                        <input type="submit" value="Eliminar"  class="btn btn-default btn-xs" />
+                                    </form>
+                                </td>
+                            </span>
+                    </tr>
+                </table>
+                <br/>
+                <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+                <div th:include="admin/course/modalAddSchoolYear :: modalAddSchoolYear"></div>
+            </div>
+        </div>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

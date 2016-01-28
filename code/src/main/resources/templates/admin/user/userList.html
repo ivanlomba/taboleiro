@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="page-header">
+                    <h2>Usuarios registrados:</h2>
+                </div>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-plus-sign"></span> Registrar un nuevo usuario
+                </button>
+                <br/>
+                <br/>
+                <table class="table table-striped table-hover table-bordered">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre de Usuario</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Rol</th>
+                        <th> </th>
+                    </tr>
+                    <tr th:each="user : ${userList}">
+                        <td><span th:text="${user.userId}">UserId</span></td>
+                        <td><span th:text="${user.loginName}">Username</span></td>
+                        <td><span th:text="${user.firstName}">Firstname</span></td>
+                        <td><span th:text="${user.lastName}">Lastname</span></td>
+                        <td>
+                            <span th:if="${user.role.toString() == 'ADMIN'}">
+                                        <span class="glyphicon glyphicon-cog">
+                                        </span> Administrador
+                            </span>
+                            <span th:if="${user.role.toString() == 'TEACHER'}">
+                                        <span class="glyphicon glyphicon-blackboard">
+                                        </span> Profesor
+                            </span>
+                            <span th:if="${user.role.toString() == 'USER'}">
+                                        <span class="glyphicon glyphicon-user">
+                                        </span> Familia
+                            </span>
+                        </td>
+                        <td><a th:href="@{/admin/message/write/user/} + ${user.userId}"  class="btn btn-default btn-xs">
+                            Enviar mensaje</a>
+                            <a th:href="@{profile/} + ${user.userId}" class="btn btn-info btn-xs">Perfil</a>
+                            <form style="display:inline-block" th:action="@{/admin/user/delete/} + ${user.userId}"
+                                  method="post">
+                                <input type="submit" value="Eliminar"  class="btn btn-danger btn-xs" />
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+                <nav>
+                    <ul class="pager">
+                        <li th:if="!${previousPage == -1}" class="previous"><a th:href="@{list?page=} + ${previousPage}">
+                            <span aria-hidden="true">&larr;</span> Anterior</a></li>
+                        <li th:if="!${nextPage == -1}" class="next"><a th:href="@{list?page=} + ${nextPage}">
+                            Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+                    </ul>
+                </nav>
+                <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+                <br/>
+                <br/>
+            </div>
+        </div>
+        <div th:include="admin/user/modalRegisterUser :: modalRegisterUser"></div>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

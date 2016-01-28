@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Editar Grupo</h2>
+        </div>
+        <form th:action="@{/admin/course/groupEdit/} + ${classGroupId}" th:object="${classGroup}" method="post"
+              data-toggle="validator">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <div class="form-group">
+                <label> Nombre del grupo:</label>
+                <input type="text" class="form-control" th:field="${classGroup.classGroupName}" name="classGroupName"
+                       required="true"/>
+            </div>
+            <div class="form-group">
+                <label> Curso:</label>
+                <select class="form-control" id="courseList" type="text" th:field="*{course}" name="course"
+                        required="true">
+                    <option th:each="course : ${courseList}" th:value="${course.courseId}"
+                            th:text="${course.courseName}" />
+                </select>
+            </div>
+            <div class="form-group">
+                <label> Tutor:</label>
+                <select class="form-control" id="userList" type="text" th:field="*{tutor}" name="tutor"
+                        required="true">
+                    <option th:each="user : ${userList}" th:value="${user.userId}"
+                            th:text="${user.lastName}" />
+                </select>
+            </div>
+            <div class="form-group" >
+                <label> Ano escolar : </label>
+                <select class="form-control" id="schoolYearList" th:field="*{schoolYear}" name="schoolYear"
+                        required="true">
+                    <option th:each="schoolYear : ${schoolYearList}" th:value="${schoolYear.schoolYearId}"
+                            th:text="${schoolYear.schoolYearName}" />
+                </select>
+            </div>
+            <div class="form-group">
+                <label> Código grupo Xade (Opcional):</label>
+                <input type="text" class="form-control" th:field="${classGroup.codigoGrupo}" name="codigoGrupo"/>
+            </div>
+            <button type="Actualizar" class="btn btn-success">Submit</button>
+        </form>
+        <br/>
+        <br/>
+        <a th:href="@{/admin/course/group}" class="btn btn-default">Volver a listado de grupos</a>
+        <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

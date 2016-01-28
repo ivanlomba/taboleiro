@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="family/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="family/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Faltas de asistencia |
+                <span style="color:#deepskyblue"> justificadas</span></h2>
+        </div>
+        <a th:href="@{/family/subject/pendingAttendanceList}" class="btn btn-warning">
+            <span class="glyphicon glyphicon-ok-circle"></span>
+            Ver faltas sin justificar</a>
+        <br/>
+        <br/>
+        <div th:if="!${#lists.isEmpty(attendanceList)}">
+            <table class="table table-striped table-hover table-bordered">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Asignatura</th>
+                    <th>Tipo de falta</th>
+                </tr>
+                <tr th:each="attendance : ${attendanceList}">
+                    <td>
+                    <span th:text="${attendance.faultDate}">
+                           11/04/2015
+                    </span>
+                    </td>
+                    <td>
+                    <span th:text="${attendance.subject.subjectName}">
+                           Lengua
+                    </span>
+                    </td>
+                    <td>
+                    <span th:if="${#strings.toString(attendance.faultType) == 'ATTENDANCE'}">
+                        <span style="color:#d43f3a"><span class="glyphicon glyphicon-eye-close">
+                        </span> Asistencia</span></span>
+                    <span th:if="${#strings.toString(attendance.faultType) == 'PUNCTUALITY'}">
+                        <span style="color:#d4884a"><span class="glyphicon glyphicon-hourglass">
+                        </span> Puntualidad</span></span>
+                    </td>
+                </tr>
+            </table>
+            <nav>
+                <ul class="pager">
+                    <li th:if="!${previousPage == -1}" class="previous">
+                        <a th:href="@{/family/subject/justifiedAttendanceList/?page=} + ${previousPage}">
+                            <span aria-hidden="true">&larr;</span> Anterior</a></li>
+                    <li th:if="!${nextPage == -1}" class="next">
+                        <a th:href="@{/family/subject/justifiedAttendanceList/?page=} + ${nextPage}">
+                            Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
+        </div>
+        <div th:if="${#lists.isEmpty(attendanceList)}">
+            <div class="alert alert-info" role="alert">
+                <br/>
+                <h1 align="center"><span class="glyphicon glyphicon-thumbs-up"></span></h1>
+                <h2 align="center"> <span th:text="${session.child.firstName}"></span> no tiene faltas sin justificar</h2>
+                <br/>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <a th:href="@{/}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></a>
+    </div>
+    <footer th:include="family/fragments/footer :: footer" />
+</body>
+</html>

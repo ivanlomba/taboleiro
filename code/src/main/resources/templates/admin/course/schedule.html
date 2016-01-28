@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Horario</h2>
+        </div>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-plus-sign"></span> Nueva hora
+        </button>
+        <a th:href="@{/admin/course/scheduleGroup}" class="btn btn-default">Volver a lista de grupos</a>
+        <br/>
+        <br/>
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th>Hora</th>
+                <th>Día</th>
+                <th>Asignatura</th>
+                <th>Grupo</th>
+            </tr>
+            <tr th:each="schedule : ${scheduleList}">
+                <td>
+                    <span th:text="${schedule.classHour.classStart}">Hora</span>
+                </td>
+                <td>
+                    <span th:if="${schedule.weekDay.toString() == 'MONDAY'}">Lunes</span>
+                    <span th:if="${schedule.weekDay.toString() == 'TUESDAY'}">Martes</span>
+                    <span th:if="${schedule.weekDay.toString() == 'WEDNESDAY'}">Miércoles</span>
+                    <span th:if="${schedule.weekDay.toString() == 'THURSDAY'}">Jueves</span>
+                    <span th:if="${schedule.weekDay.toString() == 'FRIDAY'}">Viernes</span>
+                </td>
+                <td><span th:text="${schedule.subject.subjectName}">Asignatura</span></td>
+                <td><span th:text="${schedule.classGroup.classGroupName}">Grupo</span></td>
+                <td><a th:href="@{/admin/course/deleteSchedule/} + ${schedule.scheduleId}" class="btn btn-danger btn-xs">
+                    Eliminar</a>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+        <div th:include="admin/course/modalAddSchedule :: modalAddSchedule"></div>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

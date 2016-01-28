@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="page-header">
+                    <h1>Editar estudiante</h1>
+                </div>
+                <form th:action="@{/admin/student/updateStudent/} + ${studentId}" th:object="${student}" method="post"
+                      data-toggle="validator">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="form-group">
+                            <label> Nombre :</label>
+                            <input type="text" class="form-control" th:field="*{firstName}" name="firstName"
+                                   required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label> Apellidos : </label>
+                            <input type="text" class="form-control" th:field="*{lastName}" name="lastName"
+                                   required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label> DNI : </label>
+                            <input type="text" class="form-control" th:field="*{dni}" name="dni" required="true"/>
+                        </div>
+
+                        <div>
+                            <Label> Fecha de nacimiento :</Label>
+                            <div class="input-group input-append date" id="datePicker">
+                                <input type="text" class="form-control" th:value="${date}" name="birthDate"
+                                       required="true"/>
+                                <span class="input-group-addon add-on">
+                                    <span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <div class="form-group" >
+                            <label> Tutor legal : </label>
+                            <select class="form-control" id="userList" th:field="*{guardian.userId}" name="guardian"
+                                    required="true">
+                                <option th:each="user : ${userList}" th:value="${user.userId}"
+                                        th:text="${user.lastName} +', '+ ${user.firstName}" />
+                            </select>
+                            <br/>
+                        </div>
+                    <div class="form-group" >
+                        <label> Grupo : </label>
+                        <select class="form-control" id="classGroupList" th:field="*{currentClassGroup.classGroupId}"
+                                name="currentClassGroup">
+                            <option th:each="currentClassGroup : ${classGroupList}"
+                                    th:value="${currentClassGroup.classGroupId}"
+                                    th:text="${currentClassGroup.classGroupName}" />
+                        </select>
+                        <br/>
+                    </div>
+                    <div class="form-group">
+                        <label> Código alumno Xade (opcional) : </label>
+                        <input type="text" class="form-control" th:field="${student.codigoAlumno}" name="codigoAlumno"/>
+                    </div>
+                        <br/>
+                        <input type="submit" value="Actualizar estudiante" class="btn btn-success"/>
+                        <a th:href="@{/admin/student/list}" class="btn btn-default">
+                            <span class="glyphicon glyphicon-arrow-left"></span></a>
+                        <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+    <script src="/js/bootstrap-datepicker.min.js"></script>
+    <script src="/js/bootstrap-datepicker.es.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datePicker')
+                    .datepicker({
+                        language: "es",
+                        format: 'dd-mm-yyyy'
+                    })
+                    .on('changeDate', function(e) {
+                        $('#eventForm').formValidation('revalidateField', 'date');
+                    });
+        });
+    </script>
+</body>
+</html>

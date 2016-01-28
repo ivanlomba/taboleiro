@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<div id="modalAddGroupSubject" th:fragment="modalAddGroupSubject">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Añadir asignatura en
+                        <span th:text="${classGroup.classGroupName}"/></h3>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/admin/course/addGroupSubject}" method="post" data-toggle="validator">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="form-group">
+                            <input type="hidden" name="classGroup" th:value="${classGroup.classGroupId}" />
+                            <label> Asignatura : </label>
+                            <select class="form-control" id="subjectList" name="subject">
+                                <option th:each="subject : ${subjectList}" th:value="${subject.subjectId}"
+                                        th:text="${subject.subjectName}" required="true"/>
+                            </select>
+                        </div>
+                        <div class="form-group" >
+                            <label> Profesor : </label>
+                            <select class="form-control" id="courseList" name="teacher">
+                                <option th:each="user : ${teacherList}" th:value="${user.userId}"
+                                        th:text="${user.lastName}+', '+${user.firstName}" required="true"/>
+                            </select>
+                            <br/>
+                        </div>
+                        <input type="submit" value="Crear asignatura" class="btn btn-primary"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+</div>

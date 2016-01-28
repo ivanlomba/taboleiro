@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="teacher/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="teacher/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Listado de alumnos | <span style="color:dimgrey" th:text="${classGroup.classGroupName}">
+                grupo</span></h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-10">
+                <table class="table table-striped table-hover table-bordered">
+                    <tr>
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                    </tr>
+                    <tr th:each="student, iterStat : ${studentList}">
+                        <td><span th:text="${iterStat.count}">1</span></td>
+                        <td><span th:text="${student.firstName}">Nombre</span></td>
+                        <td><span th:text="${student.lastName}">Apellidos</span></td>
+                        <td>
+                            <a th:href="@{/teacher/message/write/} + ${student.studentId}"
+                               class="btn btn-default btn-xs">
+                                Enviar mensaje</a>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <a th:href="@{/teacher/course/subjectList}" class="btn btn-primary">Volver al listado de asignaturas</a>
+                <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+    <footer th:include="teacher/fragments/footer :: footer" />
+</body>
+</html>

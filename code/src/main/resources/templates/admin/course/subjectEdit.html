@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Editar asignatura</h2>
+        </div>
+        <form th:action="@{/admin/course/updateSubject/} + ${subject.subjectId}" th:object="${subject}" method="post"
+              data-toggle="validator">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <div class="form-group">
+                    <label> Nombre asignatura : </label>
+                    <input type="text" name="subjectName" class="form-control" th:field="${subject.subjectName}"
+                           required="true"/>
+                </div>
+                <div class="form-group" >
+                    <label> Curso : </label>
+                    <select class="form-control" id="courseList" name="course" th:field="*{course}" required="true">
+                        <option th:each="course : ${courseList}" th:value="${course.courseId}"
+                                th:text="${course.courseName}" />
+                    </select>
+                    <br/>
+                </div>
+                <input type="submit" value="Actualizar" class="btn btn-success"/>
+                <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+            </form>
+        <br/>
+        <br/>
+        <a th:href="@{/admin/course/group}" class="btn btn-default">Volver a listado de grupos</a>
+        <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

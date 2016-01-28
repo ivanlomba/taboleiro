@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="family/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="family/fragments/menu"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="page-header">
+                    <h2>Calificaciones de tareas</h2>
+                </div>
+                <div th:if="${#lists.isEmpty(gradeList)}">
+                    <div class="alert alert-info" role="alert">
+                        <br/>
+                        <h1 align="center"><span class="glyphicon glyphicon-tent"></span></h1>
+                        <h2 align="center"> <span th:text="${session.child.firstName}"></span>
+                            No hay calificaciones de tareas para la asignatura seleccionada.</h2>
+                        <br/>
+                    </div>
+                </div>
+                <div th:unless="${#lists.isEmpty(gradeList)}">
+                    <table class="table table-striped table-hover table-bordered">
+                        <tr>
+                            <th>Asignatura</th>
+                            <th>Tarea</th>
+                            <th>Nota</th>
+                        </tr>
+                        <tr th:each="grade : ${gradeList}">
+                            <td><span th:text="${grade.task.subject.subjectName}">Lengua</span></td>
+                            <td><b><span th:text="${grade.task.taskName}">Examen Tema 3</span></b></td>
+                            <td><span th:text="${grade.grade}">7</span></td>
+                        </tr>
+                    </table>
+                    <nav>
+                        <ul class="pager">
+                            <li th:if="!${previousPage == -1}" class="previous">
+                                <a th:href="@{gradeList?page=} + ${previousPage}">
+                                <span aria-hidden="true">&larr;</span> Anterior</a></li>
+                            <li th:if="!${nextPage == -1}" class="next"><a th:href="@{gradeList?page=} + ${nextPage}">
+                                Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <br/>
+                <br/>
+                <a th:href="@{/}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></a>
+            </div>
+        </div>
+    </div>
+    <footer th:include="family/fragments/footer :: footer" />
+</body>
+</html>

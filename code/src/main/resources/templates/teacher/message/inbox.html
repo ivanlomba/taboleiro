@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="teacher/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="teacher/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Mensajería |
+                <span style="color:dimgrey">
+                    Bandeja de entrada
+                    <span th:if="${newMail}!=0">
+                        <span class="label label-pill label-success" th:text="${newMail}+' sin leer'">3</span>
+                    </span>
+                </span>
+            </h2>
+        </div>
+        <a th:href="@{/teacher/message/write}" class="btn btn-primary">Redactar</a>
+        <a th:href="@{/teacher/message/outbox}" class="btn btn-warning">Enviados</a>
+        <br/>
+        <br/>
+        <div th:if="${#lists.isEmpty(messageList)}">
+            <div class="alert alert-info" role="alert">
+                <br/>
+                <h1 align="center"><span class="glyphicon glyphicon-inbox"></span></h1>
+                <h2 align="center">Tu bandeja de entrada está vacía</h2>
+                <br/>
+            </div>
+        </div>
+        <div th:if="!${#lists.isEmpty(messageList)}">
+            <table class="table">
+                <tr>
+                    <th>De:</th>
+                    <th>Asunto</th>
+                    <th>Fecha</th>
+                    <th></th>
+                </tr>
+                <tr th:each="message : ${messageList}">
+                    <span th:if="${message.viewed}">
+                        <td class="active">
+                            <a th:href="@{/teacher/message/read/} + ${message.messageId}">
+                                <div style="height:100%;width:100%">
+                                <span th:text="${message.sender.firstName}+' '
+                                +${message.sender.lastName}">Ernest Hemingway</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="active">
+                            <a th:href="@{/teacher/message/read/} + ${message.messageId}">
+                                <div style="height:100%;width:100%">
+                                    <span th:text="${message.subject}">Need Help!</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="active">
+                            <a th:href="@{/teacher/message/read/} + ${message.messageId}">
+                                <div style="height:100%;width:100%">
+                                    <span th:text="${#strings.substringBefore(message.messageDate, 'T')}">
+                                        25-05-2005</span>
+                                    a las
+                                    <span th:text="${#strings.substringAfter(message.messageDate, 'T')}">
+                                        14:44:23</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="active">
+                                <form style="display:inline-block" th:action="@{/teacher/message/delete/} + ${message.messageId}"
+                                      method="post">
+                                    <input type="submit" value="Eliminar"  class="btn btn-danger btn-xs" />
+                                </form>
+                        </td>
+                    </span>
+                    <span th:unless="${message.viewed}">
+                        <td>
+                            <a th:href="@{/teacher/message/read/} + ${message.messageId}">
+                                <div style="height:100%;width:100%">
+                                    <span th:text="${message.sender.firstName}+' '
+                                    +${message.sender.lastName}">Ernest Hemingway</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/teacher/message/read/} + ${message.messageId}">
+                                <div style="height:100%;width:100%">
+                                    <span th:text="${message.subject}">Need Help!</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/teacher/message/read/} + ${message.messageId}">
+                                <div style="height:100%;width:100%">
+                                    <span th:text="${#strings.substringBefore(message.messageDate, 'T')}">
+                                        25-05-2005</span>
+                                    a las
+                                    <span th:text="${#strings.substringAfter(message.messageDate, 'T')}">
+                                        14:44:23</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                                <form style="display:inline-block" th:action="@{/teacher/message/delete/} + ${message.messageId}"
+                                      method="post">
+                                    <input type="submit" value="Eliminar"  class="btn btn-danger btn-xs" />
+                                </form>
+                        </td>
+                    </span>
+                </tr>
+            </table>
+            <nav>
+                <ul class="pager">
+                    <li th:if="!${previousPage == -1}" class="previous"><a th:href="@{inbox?page=} + ${previousPage}">
+                        <span aria-hidden="true">&larr;</span> Anterior</a></li>
+                    <li th:if="!${nextPage == -1}" class="next"><a th:href="@{inbox?page=} + ${nextPage}">
+                        Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
+        </div>
+        <br/>
+        <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+        <br/>
+        <br/>
+    </div>
+    <footer th:include="teacher/fragments/footer :: footer" />
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<div id="modalAddClassHourLevel" th:fragment="modalAddClassHourLevel">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Añadir hora al nivel</h3>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/admin/course/addClassHourLevel}" th:object="${ScheduleForm}" method="post"
+                          data-toggle="validator">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                        <div class="form-group">
+                            <label> Nivel : </label>
+                            <select class="form-control" type="text" name="courseLevel">
+                                <option value="INFANTIL">Educación Infantil</option>
+                                <option value="PRIMARIA">Educación Primaria</option>
+                                <option value="SECUNDARIA">Educación Secundaria</option>
+                            </select>
+                            <br/>
+                        </div>
+                        <div class="form-group">
+                            <label>Hora de clase:</label>
+                            <select class="form-control" type="text" name="classHour">
+                                <option value="FIRST_HOUR">1ª Hora</option>
+                                <option value="SECOND_HOUR">2ª Hora</option>
+                                <option value="THIRD_HOUR">3ª Hora</option>
+                                <option value="FOURTH_HOUR">4ª Hora</option>
+                                <option value="FIFTH_HOUR">5ª Hora</option>
+                                <option value="SIXTH_HOUR">6ª Hora</option>
+                            </select>
+                            <br/>
+                        </div>
+                        <div class="form-group">
+                            <label> Hora inicio:</label>
+                            <input type="text" class="form-control" name="classStart" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label> Hora fin:</label>
+                            <input type="text" class="form-control" name="classEnd" required="true"/>
+                        </div>
+                        <input type="submit" value="Añadir hora" class="btn btn-primary"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

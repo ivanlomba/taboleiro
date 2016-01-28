@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<div id="modalAddCourse" th:fragment="modalAddCourse">
+        <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="addCourseModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="addCourseModalLabel">Crear asignatura</h3>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/admin/course/addCourse}" method="post" data-toggle="validator">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="form-group">
+                            <label> Nombre del curso : </label>
+                            <input type="text" name="courseName" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label> Nivel : </label>
+                            <select class="form-control" type="text" name="courseLevel">
+                                <option value="INFANTIL">Educación Infantil</option>
+                                <option value="PRIMARIA">Educación Primaria</option>
+                                <option value="SECUNDARIA">Educación Secundaria</option>
+                            </select>
+                            <br/>
+                        </div>
+                        <input type="submit" value="Crear curso" class="btn btn-primary"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

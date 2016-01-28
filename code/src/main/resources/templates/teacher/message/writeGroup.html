@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="teacher/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="teacher/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Mensajería |
+                <span style="color:dimgrey">
+                    Redactar mensaje
+                </span>
+            </h2>
+        </div>
+        <a th:href="@{/teacher/message/inbox}" class="btn btn-primary">Bandeja de entrada</a>
+        <a th:href="@{/teacher/message/outbox}" class="btn btn-default">Enviados</a>
+        <br/>
+        <br/>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Enviar mensaje a
+                            <b><span th:text="${classGroup.classGroupName}"></span></b></h3>
+                    </div>
+                    <div class="panel-body">
+                        <form th:action="@{/teacher/message/send/group}" th:object="${groupMessageForm}" method="post"
+                              data-toggle="validator">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="hidden" name="sender" th:value="${senderId}"/>
+                            <input type="hidden" name="classGroup" th:value="${classGroup.classGroupId}"/>
+                            <br/>
+                            <div class="form-group">
+                                <label>Asunto:</label>
+                                <input type="text" class="form-control" name="subject" required="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Mensaje:</label>
+                                <textarea class="form-control" maxlength='255' rows="4" name="message" required="true"></textarea>
+                            </div>
+                            <br/>
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                            <a th:href="@{/}" class="btn btn-default">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+    <footer th:include="teacher/fragments/footer :: footer" />
+</body>
+</html>

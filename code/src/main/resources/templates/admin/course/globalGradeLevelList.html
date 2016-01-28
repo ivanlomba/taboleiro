@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Notas globales por nivel</h2>
+        </div>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+            Nueva nota
+        </button>
+        <br/>
+        <br/>
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th>Nivel</th>
+                <th>Calificación</th>
+                <th>Descripción Calificación</th>
+                <th>Código Xade</th>
+            </tr>
+            <tr th:each="globalGradeLevel : ${globalGradeLevelList}">
+                <td>
+                    <span th:text="${globalGradeLevel.courseLevel}">PRIMARIA</span>
+                </td>
+                <td><span th:text="${globalGradeLevel.grade}">8</span></td>
+                <td><span th:text="${globalGradeLevel.gradeName}">Notable</span></td>
+                <td><span th:text="${globalGradeLevel.xadeGrade}">C-11</span></td>
+                <td>
+                    <form style="display:inline-block" th:action="@{/admin/course/deleteGlobalGradeLevel/} +
+                            ${globalGradeLevel.globalGradeLevelId}" method="post">
+                        <input type="submit" value="Eliminar"  class="btn btn-default btn-xs" />
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <nav>
+            <ul class="pager">
+                <li th:if="!${previousPage == -1}" class="previous"><a th:href="@{globalGradeLevelList?page=} + ${previousPage}">
+                    <span aria-hidden="true">&larr;</span> Anterior</a></li>
+                <li th:if="!${nextPage == -1}" class="next"><a th:href="@{globalGradeLevelList?page=} + ${nextPage}">
+                    Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>
+        <br/>
+        <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+        <br/>
+        <br/>
+        <div th:include="admin/course/modalAddGlobalGradeLevel :: modalAddGlobalGradeLevel"></div>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

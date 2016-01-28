@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<div id="modalAddTask" th:fragment="modalAddTask">
+    <!-- Modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="addTaskModalLabel">Añadir tarea a
+                        <span th:text="${groupSubject.subject.subjectName}"> </span>
+                        <span th:text="${groupSubject.classGroup.classGroupName}"></span>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/teacher/course/addTask}" method="post" data-toggle="validator">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="form-group">
+                            <label> Nombre de la tarea: </label>
+                            <input type="text" name="taskName" class="form-control" required="true" />
+                        </div>
+                        <div class="form-group">
+                            <label> Tipo de tarea: </label>
+                            <select class="form-control" type="text" name="taskType">
+                                <option value="EXAM">Examen</option>
+                                <option value="HOMEWORK">Deberes</option>
+                                <option value="PROJECT">Trabajo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                        <label> Evaluación: </label>
+                            <select class="form-control" type="text" name="evaluation">
+                                <option value="FIRST">1ª Evaluación</option>
+                                <option value="SECOND">2ª Evaluación</option>
+                                <option value="THIRD">3ª Evaluación</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <Label> Fecha:</Label>
+                            <div class="input-group input-append date" >
+                                <input type="text" class="form-control" name="taskDate" id="datePicker" required="true"/>
+                                <span class="input-group-addon add-on">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Subject -->
+                        <input type="hidden" name="subject" th:value="${groupSubject.subject.subjectId}" />
+                        <!-- ClassGroup -->
+                        <input type="hidden" name="classGroup" th:value="${groupSubject.classGroup.classGroupId}" />
+                        <!-- Esto lo hace solo -->
+                        <br/>
+                        <br/>
+                        <input type="submit" value="Añadir tarea" class="btn btn-primary"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+</div>

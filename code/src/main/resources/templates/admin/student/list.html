@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container theme-showcase" role="main">
+        <div class="page-header">
+            <h2>Alumnos:</h2>
+        </div>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-plus-sign"></span> Crear estudiante
+        </button>
+        <br/>
+        <br/>
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th></th>
+            </tr>
+            <tr th:each="student : ${studentList}">
+                <td><span th:text="${student.firstName}">Firstname</span></td>
+                <td><span th:text="${student.lastName}">Lastname</span></td>
+                <td><span th:text="${student.dni}">DNI</span></td>
+                <td><a th:href="@{/admin/message/write/} + ${student.studentId}"  class="btn btn-default btn-xs">
+                    Enviar mensaje</a>
+                    <a th:href="@{/admin/student/profile/} + ${student.studentId}"  class="btn btn-default btn-xs">
+                    Ver perfil</a>
+                    <a th:href="@{/admin/student/updateStudent/} + ${student.studentId}" class="btn btn-info btn-xs">
+                        Editar</a>
+                    <form style="display:inline-block" th:action="@{/admin/student/delete/} + ${student.studentId}"
+                          method="post">
+                        <input type="submit" value="Eliminar"  class="btn btn-danger btn-xs" />
+                    </form>
+                    </td>
+            </tr>
+        </table>
+        <nav>
+            <ul class="pager">
+                <li th:if="!${previousPage == -1}" class="previous"><a th:href="@{list?page=} + ${previousPage}">
+                    <span aria-hidden="true">&larr;</span> Anterior</a></li>
+                <li th:if="!${nextPage == -1}" class="next"><a th:href="@{list?page=} + ${nextPage}">
+                    Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>
+        <div th:include="admin/student/modalAddStudent :: modalAddStudent"></div>
+        <br/>
+        <br/>
+        <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+        <br/>
+        <br/>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+    <script src="/js/bootstrap-datepicker.min.js"></script>
+    <script src="/js/bootstrap-datepicker.es.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datePicker')
+                    .datepicker({
+                        language: "es",
+                        format: 'dd-mm-yyyy'
+                    })
+                    .on('changeDate', function(e) {
+                        $('#eventForm').formValidation('revalidateField', 'date');
+                    });
+        });
+    </script>
+</body>
+</html>

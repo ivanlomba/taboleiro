@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<div id="modalAddStudent" th:fragment="modalAddStudent">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Crear estudiante</h3>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/admin/student/createForm}" method="post" data-toggle="validator">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="form-group" >
+                            <label> Tutor legal : </label>
+                            <select class="combobox form-control" id="userList" name="guardian">
+                                <option></option>
+                                <option th:each="user : ${userList}" th:value="${user.userId}"
+                                        th:text="${user.lastName}+', '+${user.firstName}"/>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label> Nombre :</label>
+                            <input type="text" class="form-control" name="firstName" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label> Apellidos : </label>
+                            <input type="text" class="form-control" name="lastName" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label> DNI : </label>
+                            <input type="text" class="form-control" name="dni" maxlength='10' required="true"/>
+                        </div>
+                        <div>
+                            <Label> Fecha de nacimiento :</Label>
+                            <div class="input-group input-append date" id="datePicker">
+                                <input type="text" class="form-control" name="birthDate" required="true"/>
+                                <span class="input-group-addon add-on">
+                                    <span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label> Grupo : </label>
+                            <select class="form-control" id="classGroupList" name="currentClassGroup" required="true">
+                                <option></option>
+                                <option th:each="classGroup : ${classGroupList}" th:value="${classGroup.classGroupId}"
+                                        th:text="${classGroup.classGroupName}"/>
+                            </select>
+                            <br/>
+                        </div>
+                        <div class="form-group">
+                            <label> Código alumno Xade (Opcional): </label>
+                            <input type="text" class="form-control" name="codigoAlumno"/>
+                        </div>
+
+                        <br/>
+                        <input type="submit" value="Crear estudiante" class="btn btn-success"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

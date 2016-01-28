@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="page-header">
+                    <h2>Grupos</h2>
+                </div>
+                <br/>
+                <table class="table table-striped table-hover table-bordered">
+                    <tr>
+                        <th>Grupo</th>
+                        <th>Curso</th>
+                        <th>Año escolar</th>
+                    </tr>
+                    <tr th:each="classGroup : ${classGroupList}">
+                        <td><a th:href="@{/admin/xade/selectSubject/} + ${classGroup.classGroupId}">
+                            <span th:text="${classGroup.classGroupName}">Grupo</span></a>
+                        </td>
+                        <td><span th:text="${classGroup.course.courseName}">Curso</span></td>
+                        <td><span th:text="${classGroup.schoolYear.schoolYearName}">Tutor</span></td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+            </div>
+        </div>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

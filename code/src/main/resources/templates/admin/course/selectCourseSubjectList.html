@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Asignaturas</h2>
+        </div>
+        <h3>Selecciona un curso:</h3>
+        <br/>
+        <div class="row">
+            <div class="col-lg-6">
+                <table class="table table-striped table-hover table-bordered">
+                    <tr>
+                        <th>Curso</th>
+                    </tr>
+                    <tr th:each="course : ${courseList}">
+                        <td><a th:href="@{/admin/course/subjectList/} + ${course.courseId}">
+                                <span th:text="${course.courseName}">
+                                    course name</span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

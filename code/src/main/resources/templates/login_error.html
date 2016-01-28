@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Taboleiro - Introducir credenciales</title>
+    <meta name="viewport" contect="width=device-width, initial-scale=1.0" />
+    <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+    <link href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div>
+            <form th:action="@{/login}" method="post" class="form-signin">
+                <img src="/img/taboleiro_inicio.png" alt="plataforma educativa" />
+                <h2 class="form-signin-heading">Iniciar sesión</h2>
+                    <div th:if="!${#strings.isEmpty(error)}" class="alert-danger">
+                        <h3><span th:text="${error}">Error de autenticación</span>
+                        </h3></div>
+                <label for="username">Nombre de usuario</label>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Nombre de usuario"/>
+                <br/>
+                <label for="inputPassword">Contraseña</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="password"/>
+                <br/>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

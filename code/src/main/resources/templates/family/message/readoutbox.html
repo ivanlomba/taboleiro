@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="family/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="family/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Mensajería |
+                <span style="color:dimgrey">
+                    Leer mensaje enviado
+                </span>
+            </h2>
+        </div>
+        <h3><span th:text="${message.subject}">Help!</span></h3>
+        <br/>
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Para: <b><span th:text="${message.addressee.firstName} +' '
+                        + ${message.addressee.lastName}"></span></b>
+                            :: <span th:text="${#strings.substringBefore(message.messageDate, 'T')}"></span>
+                            a las
+                            <span th:text="${#strings.substringAfter(message.messageDate, 'T')}"></span></h3>
+                    </div>
+                    <div class="panel-body">
+                        <span th:text="${message.message}"></span>
+                        <br/>
+                    </div>
+                    <div class="panel-footer">
+                        <a th:href="@{/family/message/delete/}+${message.messageId}" class="btn btn-default">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/><a th:href="@{/family/message/outbox}" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Enviados</a>
+    </div>
+    <footer th:include="family/fragments/footer :: footer" />
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container theme-showcase" role="main">
+        <div class="page-header">
+            <h2>Alumnos:</h2>
+        </div>
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Fecha de nacimiento</th>
+                <th>Nombre tutor legal</th>
+                <th>Apellidos tutor legal</th>
+            </tr>
+            <tr>
+                <td><span th:text="${student.studentId}">ID Estudiante</span></td>
+                <td><span th:text="${student.firstName}">Nombre</span></td>
+                <td><span th:text="${student.lastName}">Apellidos</span></td>
+                <td><span th:text="${student.dni}">DNI</span></td>
+                <td><span th:text="${birthdate}">Fecha de nacimiento</span></td>
+                <td><span th:text="${student.guardian.firstName}">Tutor legal</span></td>
+                <td><span th:text="${student.guardian.lastName}">Tutor legal</span></td>
+                <td><a th:href="@{/admin/student/updateStudent/} + ${student.studentId}" class="btn btn-warning btn-xs">
+                    Editar perfil</a></td>
+                <td><a th:href="@{/admin/student/delete/} + ${student.studentId}"  class="btn btn-danger btn-xs">
+                    Eliminar usuario</a></td>
+            </tr>
+        </table>
+        <br/>
+        <a th:href="@{/admin/student/list}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-arrow-left"></span></a>
+        <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+        <a th:href="@{/admin/student/create}" class="btn btn-default">Registrar un nuevo usuario</a>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Mensajería |
+                <span style="color:dimgrey">
+                    Leer mensaje
+                </span>
+            </h2>
+        </div>
+        <h3><span th:text="${message.subject}">Help!</span></h3>
+        <br/>
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">De: <b>
+                            <span th:text="${message.sender.firstName} +' '+ ${message.sender.lastName}"></span></b>
+                            :: <span th:text="${#strings.substringBefore(message.messageDate, 'T')}"></span>
+                            a las
+                            <span th:text="${#strings.substringAfter(message.messageDate, 'T')}"></span></h3>
+                    </div>
+                    <div class="panel-body">
+                        <span th:text="${message.message}"></span>
+                        <br/>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#replyMessageModal">Responder
+                        </button>
+                        <form style="display:inline-block" th:action="@{/admin/message/unread/} + ${message.messageId}"
+                              method="post">
+                            <input type="submit" value="Marcar como no leído"  class="btn btn-default" />
+                        </form>
+                        <form style="display:inline-block" th:action="@{/admin/message/delete/} + ${message.messageId}" method="post">
+                            <input type="submit" value="Eliminar"  class="btn btn-danger" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/><a th:href="@{/admin/message/inbox}" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Bandeja de entrada</a>
+        <div th:include="admin/message/modalReply :: modalReply"></div>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

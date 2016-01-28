@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<div id="modalAddSchedule" th:fragment="modalAddSchedule">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Añadir hora al grupo
+                        <span th:text="${classGroup.classGroupName}">GRUPO A</span></h3>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/admin/course/addSchedule}" th:object="${ScheduleForm}" method="post"
+                          data-toggle="validator">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                        <input type="hidden" name="classGroup" th:value="${classGroup.classGroupId}"/>
+                        <div class="form-group">
+                            <label>Asignatura</label>
+                            <select class="form-control" id="subjectList" name="subject">
+                                <option th:each="subject : ${subjectList}" th:value="${subject.subjectId}"
+                                        th:text="${subject.subjectName}" />
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Hora de clase:</label>
+                            <select class="form-control" type="text" name="classHour">
+                                <option th:each="classHourLevel : ${classHourList}"
+                                        th:value="${classHourLevel.classHourLevelId}"
+                                        th:text="'de '+${classHourLevel.classStart}+' a '+${classHourLevel.classEnd}">10:00</option>
+                            </select>
+                            <br/>
+                        </div>
+                        <div class="form-group">
+                            <label>Día de la semana:</label>
+                            <select class="form-control" type="text" name="weekDay">
+                                <option value="MONDAY">Lunes</option>
+                                <option value="TUESDAY">Martes</option>
+                                <option value="WEDNESDAY">Miércoles</option>
+                                <option value="THURSDAY">Jueves</option>
+                                <option value="FRIDAY">Viernes</option>
+                            </select>
+                            <br/>
+                        </div>
+                        <input type="submit" value="Añadir horario" class="btn btn-primary"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+</div>

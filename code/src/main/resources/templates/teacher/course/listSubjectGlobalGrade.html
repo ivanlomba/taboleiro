@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="teacher/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="teacher/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Calificaciones globales |
+                <span style="color:dimgrey">
+                <span th:text="${groupSubject.subject.subjectName}">Asignatura</span> -
+                <span th:text="${groupSubject.classGroup.classGroupName}">Grupo</span>
+                </span>
+            </h2>
+        </div>
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th></th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Ev. 1</th>
+                <th>Ev. 2</th>
+                <th>Ev. 3</th>
+            </tr>
+            <tr th:each="studentGlobalGradeCO, iterStat : ${studentGlobalGradeList}">
+                <td><span th:text="${iterStat.count}">1</span></td>
+                <td><span th:text="${studentGlobalGradeCO.studentFirstName}">Nombre</span></td>
+                <td><span th:text="${studentGlobalGradeCO.studentLastName}">Apellidos</span></td>
+                <td>
+                    <span th:if="${studentGlobalGradeCO.globalGradeEv1 == ''}">
+                        <a th:href="@{/teacher/course/addGlobalGrade/}
+                        + ${studentGlobalGradeCO.studentId}+'/'+${groupSubject.groupSubjectId}
+                        +'?subject='+${groupSubject.subject.subjectId}"
+                           class="btn btn-default btn-xs">Calificar</a>
+                    </span>
+                    <span th:unless="${studentGlobalGradeCO.globalGradeEv1 == ''}"
+                          th:text="${studentGlobalGradeCO.globalGradeEv1}">
+                    </span>
+                </td>
+                <td>
+                    <span th:if="${studentGlobalGradeCO.globalGradeEv2 == ''}">
+                        <a th:href="@{/teacher/course/addGlobalGrade/}
+                        + ${studentGlobalGradeCO.studentId}+'/'+${groupSubject.groupSubjectId}
+                        +'?subject='+${groupSubject.subject.subjectId}"
+                           class="btn btn-default btn-xs">Calificar</a>
+                    </span>
+                    <span th:unless="${studentGlobalGradeCO.globalGradeEv2 == ''}"
+                          th:text="${studentGlobalGradeCO.globalGradeEv2}">
+                    </span>
+                </td>
+                <td>
+                    <span th:if="${studentGlobalGradeCO.globalGradeEv3 == ''}">
+                        <a th:href="@{/teacher/course/addGlobalGrade/}
+                        + ${studentGlobalGradeCO.studentId}+'/'+${groupSubject.groupSubjectId}
+                        +'?subject='+${groupSubject.subject.subjectId}"
+                           class="btn btn-default btn-xs">Calificar</a>
+                    </span>
+                    <span th:unless="${studentGlobalGradeCO.globalGradeEv3 == ''}"
+                          th:text="${studentGlobalGradeCO.globalGradeEv3}">
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <a th:href="@{/teacher/course/selectSubjectGlobalGrade}" class="btn btn-default">Volver al listado de asignaturas</a>
+        <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a>
+        <br/>
+        <br/>
+    </div>
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

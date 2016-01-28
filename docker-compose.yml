@@ -1,0 +1,34 @@
+web:
+  build: .
+  working_dir: /code
+  volumes:
+      - ./code:/code
+  links: 
+      - db:database
+  ports:
+      - "8080:8080"
+  volumes_from:
+      - data
+
+code:
+  build: .
+  working_dir: /code
+  volumes:
+      - ./code:/code
+  volumes_from:
+      - data
+
+data:
+  build: .
+  volumes:
+      - /root/.m2/
+
+db:
+  build: ./db/
+  environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=local
+      - MYSQL_PASSWORD=local
+      - MYSQL_DATABASE=local
+  ports:
+      - "3306:3306"

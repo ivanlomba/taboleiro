@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ERROR</title>
+    <meta name="viewport" contect="width=device-width, initial-scale=1.0" />
+    <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet" media="screen" />
+    <link href="../static/css/bootstrap-theme.css" th:href="@{/css/bootstrap-theme.css}" rel="stylesheet" media="screen" />
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" media="screen" />
+</head>
+<body>
+    <div class="container theme-showcase" role="main">
+        <div class="jumbotron">
+            <h1>
+                Error
+            </h1>
+            <h3>Se ha producido un error:</h3>
+            <samp><h3><span th:text="${exception}">99</span></h3></samp>
+            <samp><h3><span th:text="${message}">99</span></h3></samp>
+            <samp><h3><span th:text="${stack}">99</span></h3></samp>
+            <samp><h3><span th:text="${errorCode}">99</span></h3></samp>
+            <a th:href="@{/}" class="btn btn-default">Volver</a>
+        </div>
+    </div>
+</body>
+</html>

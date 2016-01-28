@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="teacher/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="teacher/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Actualizar nota</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <form th:action="@{/teacher/course/editTaskGrade/}+${task.taskId}+'/'+${grade.student.studentId}"
+                      th:object="${grade}" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="hidden" name="student" th:value="${grade.student.studentId}" />
+                <input type="hidden" name="task" th:value="${task.taskId}" />
+                <div class="form-group">
+                    <label> Nota: </label>
+                    <select class="form-control" type="text" name="grade" th:field="${grade.grade}">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                        <label> Observación: </label>
+                        <input type="text" name="observation" class="form-control" th:field="${grade.observation}"/>
+                    </div>
+                    <input type="submit" value="Actualizar nota" class="btn btn-success"/>
+                    <a th:href="@{/teacher/course/taskGrade/}+${task.taskId}" class="btn btn-default">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer th:include="teacher/fragments/footer :: footer" />
+</body>
+</html>

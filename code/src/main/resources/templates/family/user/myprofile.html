@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="family/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="family/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h1>Perfil</h1>
+        </div>
+        <br/>
+        <br/>
+        <div class="container marketing">
+            <div class="row">
+                <div class="col-lg-4">
+                    <img class="img-circle" src="/img/profile.png" alt="generic profile image"/>
+                </div>
+                <div class="col-lg-4">
+                    <h4>Nombre de usuario</h4>
+                    <h3><samp><span th:text="${user.loginName}">UserId</span></samp></h3>
+
+                    <h4>Nombre</h4>
+                    <h3><samp><span th:text="${user.firstName}">UserId</span></samp></h3>
+
+                    <h4>Apellidos</h4>
+                    <h3><samp><span th:text="${user.lastName}">UserId</span></samp></h3>
+                </div>
+                <div class="col-lg-4">
+                    <h4>Email</h4>
+                    <h3><samp><span th:text="${user.email}">UserId</span></samp></h3>
+                    <h4>Teléfono</h4>
+                    <h3><samp><span th:text="${user.phoneNumber}">UserId</span></samp></h3>
+                </div>
+            </div>
+            <br/>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                Editar mi perfil
+            </button>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#passModal">
+                Editar password
+            </button>
+            <a th:href="@{/}" class="btn btn-primary">Volver al menu principal</a>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </div>
+        <div th:include="family/user/modalMyProfile :: modalMyProfile"></div>
+        <div th:include="family/user/modalEditPassword :: modalEditPassword"></div>
+    </div>
+    <footer th:include="family/fragments/footer :: footer" />
+</body>
+</html>

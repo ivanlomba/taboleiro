@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="teacher/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="teacher/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2><span style="color:red">Faltas sin justificar</span> |
+                <span style="color:dimgrey">
+                    <span th:text="${subject.subjectName}">Asignatura</span>
+                </span>
+            </h2>
+        </div>
+        <a th:href="@{/teacher/course/attendanceList/}+${groupSubjectId}" class="btn btn-default"><span class="glyphicon glyphicon-time">
+        </span>
+            Faltas de hoy</a>
+        <a th:href="@{/teacher/course/justifiedAttendanceList/}+${groupSubjectId}" class="btn btn-info"><span class="glyphicon glyphicon-th-list"></span>
+            Faltas justificadas</a>
+        <br/>
+        <br/>
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th>Alumno</th>
+                <th>Tipo de falta</th>
+                <th>Fecha</th>
+            </tr>
+            <tr th:each="attendance : ${studentAttendanceList}">
+                <td>
+                    <span th:text="${attendance.student.lastName}">
+                            Perez
+                    </span>,
+                    <span th:text="${attendance.student.firstName}">
+                            Juan
+                    </span>
+                </td>
+                <td>
+                    <span th:if="${#strings.toString(attendance.faultType) == 'ATTENDANCE'}">
+                        <span style="color:#d43f3a"><span class="glyphicon glyphicon-eye-close">
+                        </span> Asistencia
+                        <form style="display:inline-block" th:action="@{/teacher/course/deleteAttendance/} + ${attendance.attendanceId}"
+                              method="post">
+                            <input type="submit" value="Eliminar"  class="btn btn-default btn-xs" />
+                        </form>
+                        </span></span>
+                    <span th:if="${#strings.toString(attendance.faultType) == 'PUNCTUALITY'}">
+                        <span style="color:#d4884a"><span class="glyphicon glyphicon-hourglass">
+                        </span> Puntualidad
+                            <form style="display:inline-block" th:action="@{/teacher/course/deleteAttendance/} + ${attendance.attendanceId}"
+                                  method="post">
+                                <input type="submit" value="Eliminar"  class="btn btn-default btn-xs" />
+                            </form>
+                        </span></span>
+                </td>
+                <td>
+                    <span th:text="${attendance.faultDate}">
+                            2015-11-17
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <nav>
+            <ul class="pager">
+                <li th:if="!${previousPage == -1}" class="previous">
+                    <a th:href="@{/teacher/course/notJustifiedAttendanceList/}+${groupSubjectId}+@{/?page=} + ${previousPage}">
+                        <span aria-hidden="true">&larr;</span> Anterior</a></li>
+                <li th:if="!${nextPage == -1}" class="next">
+                    <a th:href="@{/teacher/course/notJustifiedAttendanceList/}+${groupSubjectId}+@{/?page=} + ${nextPage}">
+                        Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>
+        <br/>
+        <br/>
+        <a th:href="@{/}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></a>
+    </div>
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

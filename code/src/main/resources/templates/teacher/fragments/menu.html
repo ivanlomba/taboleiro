@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<div id="menu" th:fragment="menu">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">
+                    <img src="/img/header_mini2.png" alt="Taboleiro - Plataforma Educativa" /></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li role="presentation">
+                        <a th:href="@{/teacher/message/inbox}">
+                            <span class="glyphicon glyphicon-envelope"></span> Mensajería
+                            <span th:if="${newMail}!=0">
+                             <span class="label label-pill label-warning" th:text="${newMail}">3</span>
+                        </span></a>
+                    </li>
+                    <li class="dropdown">
+                        <a th:href="@{/admin/user/list}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-book"></span> Mis Asignaturas<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/teacher/course/subjectList}">Lista de asignaturas</a></li>
+                            <li><a th:href="@{/teacher/course/selectTaskSubject/}">Tareas y eventos</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a th:href="@{/teacher/user/list}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-check"></span> Calificaciones<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/teacher/course/selectGradeSubject}">Calificaciones tareas</a></li>
+                            <li><a th:href="@{/teacher/course/selectSubjectGlobalGrade/}">Calificaciones globales</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a th:href="@{/teacher/course/selectAttendanceSubject}">
+                        <span class="glyphicon glyphicon-list"></span> Faltas</a></li>
+                    <li><a th:href="@{/teacher/course/schedule}">
+                        <span class="glyphicon glyphicon-calendar"></span> Horarios</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a th:href="@{/admin/user/list}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-user"></span> <span th:inline="text">
+                            [[${#httpServletRequest.remoteUser}]]</span> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/teacher/user/myprofile/}">Perfil</a></li>
+                            <li><form th:action="@{/logout}" method="post">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <span class="glyphicon glyphicon-off"></span>
+                                <input type="submit" value="Cerrar sesión" class="btn-link2"/>
+                            </form></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>

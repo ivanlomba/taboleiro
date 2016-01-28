@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="admin/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Asignaturas  |
+                <span style="color:dimgrey">
+                    <span th:text="${courseName}"></span></span>
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                <span class="glyphicon glyphicon-plus-sign"></span> Nueva asignatura
+            </button>
+            <br/>
+            <br/>
+            <table class="table table-striped table-hover table-bordered">
+                <tr>
+                    <th>Nombre asignatura</th>
+                    <th>Curso</th>
+                </tr>
+                <tr th:each="subject : ${subjectList}">
+                    <td><span th:text="${subject.subjectName}">Grupo</span></td>
+                    <td><span th:text="${subject.course.courseName}">Curso</span></td>
+                    <td class="text-center">
+                        <a th:href="@{/admin/course/updateSubject/} + ${subject.subjectId}" class="btn btn-info btn-xs">
+                            Editar</a>
+                        <a th:href="@{/admin/course/deleteSubject/} + ${subject.subjectId}" class="btn btn-danger btn-xs">
+                        Eliminar</a>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </div>
+        <br/>
+        <a th:href="@{/}" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span></a>
+        <br/>
+        <br/>
+        <div th:include="admin/course/modalAddSubject :: modalAddSubject"></div>
+    </div>
+    <footer th:include="admin/fragments/footer :: footer" />
+</body>
+</html>

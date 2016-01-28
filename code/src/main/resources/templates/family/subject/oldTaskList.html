@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="family/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="family/fragments/menu"></div>
+    <div class="container">
+        <div class="page-header">
+            <h2>Tareas pasadas</h2>
+        </div>
+        <a th:href="@{/family/subject/taskList}" class="btn btn-default">
+            <span class="glyphicon glyphicon-th-list"></span>
+            Tareas próximas</a>
+        <br/>
+        <br/>
+        <div th:if="${#lists.isEmpty(taskList)}">
+            <div class="alert alert-info" role="alert">
+                <br/>
+                <h1 align="center"><span class="glyphicon glyphicon-tent"></span></h1>
+                <h2 align="center"> <span th:text="${session.child.firstName}"></span>
+                    No hay tareas que aún no hayan vencido.</h2>
+                <br/>
+            </div>
+        </div>
+        <div th:unless="${#lists.isEmpty(taskList)}">
+            <table class="table table-striped table-hover table-bordered">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Nombre tarea</th>
+                    <th>Asignatura</th>
+                </tr>
+                <tr th:each="task : ${taskList}">
+                    <td><span th:text="${task.taskDate}"></span></td>
+                    <td><b><span th:text="${task.taskName}">Examen Tema 3</span></b></td>
+                    <td>
+                        <span th:if="${task.taskType.toString() == 'PROJECT'}">Trabajo</span>
+                        <span th:if="${task.taskType.toString() == 'EXAM'}">Examen</span>
+                        <span th:if="${task.taskType.toString() == 'HOMEWORK'}">Deberes</span>
+                    </td>
+                    <td><span th:text="${task.subject.subjectName}">Lengua</span></td>
+                </tr>
+            </table>
+            <nav>
+                <ul class="pager">
+                    <li th:if="!${previousPage == -1}" class="previous">
+                        <a th:href="@{taskList?page=} + ${previousPage}">
+                        <span aria-hidden="true">&larr;</span> Anterior</a>
+                    </li>
+                    <li th:if="!${nextPage == -1}" class="next"><a th:href="@{taskList?page=} + ${nextPage}">
+                        Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
+        </div>
+        <br/>
+        <br/>
+        <a th:href="@{/}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></a>
+    </div>
+    <footer th:include="family/fragments/footer :: footer" />
+</body>
+</html>

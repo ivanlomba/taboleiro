@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="teacher/fragments/tagHeader :: tagHeader" />
+<body>
+
+<div th:replace="teacher/fragments/menu"></div>
+
+<div class="container">
+    <div class="page-header">
+        <h2>Asistencia |
+                <span style="color:dimgrey">
+                    <span th:text="${subject.subjectName}">Asignatura</span>
+                </span>
+        </h2>
+    </div>
+    <a th:href="@{/teacher/course/notJustifiedAttendanceList/} + ${groupSubjectId}"
+       class="btn btn-warning"><span class="glyphicon glyphicon-exclamation-sign"></span>
+        Faltas sin justificar</a>
+    <a th:href="@{/teacher/course/justifiedAttendanceList/} + ${groupSubjectId}" class="btn btn-info"><span class="glyphicon glyphicon-th-list"></span>
+        Faltas justificadas</a>
+    <br/>
+    <h3>Faltas de hoy</h3>
+    <table class="table table-striped table-hover table-bordered">
+        <tr>
+            <th></th>
+            <th>Alumno</th>
+            <th>Tipo de falta</th>
+        </tr>
+
+        <tr th:each="studentAttendance, iterStat : ${studentAttendanceList}">
+            <td><span th:text="${iterStat.count}">1</span></td>
+            <td>
+                    <span th:text="${studentAttendance.studentLastName}">
+                            Perez
+                    </span>,
+                    <span th:text="${studentAttendance.studentFirstName}">
+                            Juan
+                    </span>
+            </td>
+            <td>
+                <div th:if="${studentAttendance.fault}">
+                        <span th:if="${studentAttendance.fault == 'ATTENDANCE'}">
+                            <span style="color:#d43f3a"><span class="glyphicon glyphicon-eye-close">
+                            </span> Asistencia
+                            </span></span>
+                        <span th:if="${studentAttendance.fault == 'PUNCTUALITY'}">
+                            <span style="color:#d4884a"><span class="glyphicon glyphicon-hourglass">
+                            </span> Puntualidad</span></span>
+                </div>
+                <div th:unless="${studentAttendance.fault}">
+                    <form style="display:inline-block" th:action="@{/teacher/course/addAttendance/} + ${groupSubjectId}" th:object="${AddAttendanceForm}" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="hidden" name="student" th:value="${studentAttendance.studentId}" />
+                            <input type="hidden" name="subject" th:value="${subject.subjectId}" />
+                            <input type="hidden" name="classGroup" th:value="${classGroup}" />
+                            <input type="hidden" name="faultType" th:value="${attendanceFault}" />
+                        <input type="submit" value="Falta asistencia"  class="btn btn-default btn-xs" />
+                    </form>
+                    <form style="display:inline-block" th:action="@{/teacher/course/addAttendance/} + ${groupSubjectId}"
+                          th:object="${AddAttendanceForm}" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="hidden" name="student" th:value="${studentAttendance.studentId}" />
+                            <input type="hidden" name="subject" th:value="${subject.subjectId}" />
+                            <input type="hidden" name="classGroup" th:value="${classGroup}" />
+                            <input type="hidden" name="faultType" th:value="${punctualityFault}" />
+                        <input type="submit" value="Falta puntualidad" class="btn btn-default btn-xs"/>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <br/>
+    <a th:href="@{/}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></a>
+</div>
+<script src="/js/jquery-1.11.3.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

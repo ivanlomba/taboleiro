@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="family/fragments/tagHeader :: tagHeader" />
+<body>
+    <div th:replace="family/fragments/menu"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="page-header">
+                    <h2>Notas Globales</h2>
+                </div>
+                <div th:if="${#lists.isEmpty(globalGradeList)}">
+                    <div class="alert alert-info" role="alert">
+                        <br/>
+                        <h1 align="center"><span class="glyphicon glyphicon-check"></span></h1>
+                        <h2 align="center"><span th:text="${session.child.firstName}"></span>
+                            aún no tiene evaluaciones.</h2>
+                        <br/>
+                    </div>
+                </div>
+                <div th:unless="${#lists.isEmpty(globalGradeList)}">
+                    <table class="table table-striped table-hover table-bordered">
+                        <tr>
+                            <th>Asignatura</th>
+                            <th>Nota</th>
+                            <th>Evaluación</th>
+                            <th>Año</th>
+                        </tr>
+                        <tr th:each="globalGrade : ${globalGradeList}">
+                            <td>
+                                <span th:text="${globalGrade.subject.subjectName}">Naturales</span>
+                            </td>
+                            <td>
+                                <b><span th:text="${globalGrade.grade.grade}">7</span></b>
+                                (<span th:text="${globalGrade.grade.gradeName}">Notable</span>)
+                            </td>
+                            <td>
+                                <span th:if="${#strings.toString(globalGrade.evaluation) == '1'}">
+                                    1ª Evaluación
+                                </span>
+                                <span th:if="${#strings.toString(globalGrade.evaluation) == '2'}">
+                                    2ª Evaluación
+                                </span>
+                                <span th:if="${#strings.toString(globalGrade.evaluation) == '3'}">
+                                    3ª Evaluación
+                                </span>
+                            </td>
+                            <td>
+                                <b><span th:text="${globalGrade.schoolYear.schoolYearName}">2016-1017</span></b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:include="family/fragments/footer :: footer" />
+</body>
+</html>
