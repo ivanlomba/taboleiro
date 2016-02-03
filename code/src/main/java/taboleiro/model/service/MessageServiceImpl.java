@@ -9,7 +9,6 @@ import taboleiro.model.domain.message.Message;
 import taboleiro.model.domain.user.User;
 import taboleiro.model.exception.ClassGroupNotFoundException;
 import taboleiro.model.exception.MessageNotFoundException;
-import taboleiro.model.exception.StudentNotFoundException;
 import taboleiro.model.exception.UserNotFoundException;
 import taboleiro.model.service.user.UserService;
 import taboleiro.model.repository.message.MessageRepository;

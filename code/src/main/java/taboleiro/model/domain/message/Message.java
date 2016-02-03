@@ -7,7 +7,6 @@ import taboleiro.model.service.util.LocalDateTimeAttributeConverter;
 import java.time.LocalDateTime;
 
 @Data
-@EqualsAndHashCode(exclude={"classGroup", "guardian", "course", "sendList"})
 @Entity(name = "message")
 @Builder
 @NoArgsConstructor

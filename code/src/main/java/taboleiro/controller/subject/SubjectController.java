@@ -57,8 +57,6 @@ public class SubjectController {
 
     @RequestMapping("/subjectList/{courseId}")
     public String subjectList(
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "amount", defaultValue = "25") int amount,
             @PathVariable("courseId") long courseId,
             Model model, HttpServletRequest request) throws UserNotFoundException, CourseNotFoundException {
 
@@ -189,8 +187,7 @@ public class SubjectController {
 
     @RequestMapping(value = "/groupSubjectEdit/{groupSubjectId}", method = RequestMethod.POST)
     public String editClassGroupSubject(@PathVariable("groupSubjectId") Long groupSubjectId,
-                                        GroupSubjectCreateForm form, BindingResult bindingResult)
-                                throws GroupSubjectNotFoundException {
+                                        GroupSubjectCreateForm form) throws GroupSubjectNotFoundException {
 
         GroupSubject gs = courseService.findGroupSubjectById(groupSubjectId);
         courseService.updateGroupSubject(groupSubjectId, form);

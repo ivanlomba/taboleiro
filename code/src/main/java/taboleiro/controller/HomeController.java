@@ -122,7 +122,7 @@ public class HomeController {
 
     @Secured("USER")
     @RequestMapping(value = "/family/setStudent", method = RequestMethod.POST)
-    public String setStudent(HttpServletRequest request, SelectedStudent form, Model model)
+    public String setStudent(HttpServletRequest request, SelectedStudent form)
             throws ChildrenListNotFoundException,
             UserNotFoundException, StudentNotFoundException {
 
@@ -132,8 +132,7 @@ public class HomeController {
     }
 
     @RequestMapping("/login")
-    public String login(@RequestParam(value = "error", required = false) String error,
-                        @RequestParam(value = "logout", required = false) String logout, Model model) {
+    public String login(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) {
             model.addAttribute("error", "Error de autenticación");
         }

@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PaginationUtil<T> {
+public class PaginationUtil {
 
-        public Integer getPreviousPage(Page<T> pages) {
+        public Integer getPreviousPage(Page<?> pages) {
             if (pages.hasPrevious()) {
                 Integer currentPage = pages.getNumber();
                 return currentPage-1;
@@ -14,7 +14,7 @@ public class PaginationUtil<T> {
             else return -1;
         }
 
-    public Integer getNextPage(Page<T> pages) {
+    public Integer getNextPage(Page<?> pages) {
         if (pages.hasNext()) {
             Integer currentPage = pages.getNumber();
             return currentPage+1;

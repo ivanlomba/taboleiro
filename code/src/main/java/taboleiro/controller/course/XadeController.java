@@ -16,7 +16,6 @@ import taboleiro.model.exception.GroupSubjectNotFoundException;
 import taboleiro.model.exception.StudentNotFoundException;
 import taboleiro.model.exception.UserNotFoundException;
 import taboleiro.model.service.CourseService;
-import taboleiro.model.service.StudentService;
 import taboleiro.model.service.xade.Xade;
 import taboleiro.model.service.xade.XadeConverter;
 import javax.servlet.http.HttpServletRequest;

@@ -54,10 +54,7 @@ public class CourseController {
      */
 
     @RequestMapping("/list")
-    public String courseList(
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "amount", defaultValue = "20") int amount,
-            Model model, HttpServletRequest request) throws UserNotFoundException {
+    public String courseList(Model model, HttpServletRequest request) throws UserNotFoundException {
 
         User u = userService.findUserByLoginName(request.getRemoteUser());
         model.addAttribute("newMail", messageService.countNewMail(u.getUserId()));
