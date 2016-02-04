@@ -166,14 +166,12 @@ public class CourseController {
 
         User u = userService.findUserByLoginName(request.getRemoteUser());
         model.addAttribute("newMail", messageService.countNewMail(u.getUserId()));
-        // Modal pop up form ***
         List<Course> courseList = courseService.listCourse();
         model.addAttribute("courseList", courseList);
         Page<User> userList = userService.findUserByRole(new PageRequest(0,20), User.Role.TEACHER);
         model.addAttribute("userList", userList.getContent());
         Page<SchoolYear> schoolYearList = courseService.listSchoolYear(new PageRequest(0, 20));
         model.addAttribute("schoolYearList", schoolYearList.getContent());
-        // Modal pop up form ***
         Page<ClassGroup> classGroupList = courseService.listClassGroup(new PageRequest(page, 10));
         model.addAttribute("classGroupList", classGroupList);
         model.addAttribute("previousPage", paginationUtil.getPreviousPage(classGroupList));
@@ -230,13 +228,9 @@ public class CourseController {
         User u = userService.findUserByLoginName(request.getRemoteUser());
         model.addAttribute("newMail", messageService.countNewMail(u.getUserId()));
         ClassGroup cg = courseService.findClassGroupById(classGroupId);
-        List<Student> studentList = studentService.findStudentByClassGroup(cg.getClassGroupId());
         model.addAttribute("classGroup", cg);
+        Set<Student> studentList = cg.getStudentList();
         model.addAttribute("studentList", studentList);
-        Page<Student> allStudents = studentService.listStudent(new PageRequest(0, 30));
-        model.addAttribute("allStudents", allStudents);
-        Set<Student> lista2 = cg.getStudentList();
-        model.addAttribute("lista2", lista2);
         return "admin/course/studentList";
     }
 

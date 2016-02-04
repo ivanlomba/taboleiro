@@ -51,11 +51,10 @@
                             <span th:text="${session.child.firstName}"></span><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li th:each="student : ${childrenList}">
-                                <form th:action="@{/family/setStudent}" th:object="${SelectedStudent}" method="post">
-                                    <input type="hidden" name="studentId" th:value="${student.studentId}" />
+                                <form th:action="@{/family/setStudent/} + ${student.studentId}"
+                                      method="post">
                                     <input type="submit" th:value="${student.firstName} + ' '+${student.lastName}"
-                                           class="btn-link-other">
-                                    </input>
+                                           class="btn-link-other" />
                                 </form>
                             </li>
                         </ul>

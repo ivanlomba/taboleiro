@@ -10,11 +10,11 @@ import taboleiro.model.exception.UserNotFoundException;
 import taboleiro.model.service.MessageService;
 import taboleiro.model.service.user.UserService;
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.Set;
-import java.util.TimeZone;
 
 @Component
 public class SessionUtil {
@@ -50,19 +50,17 @@ public class SessionUtil {
     }
 
     public String getDay() {
-        SimpleDateFormat formato =
-                new SimpleDateFormat("EEEE, d MMM yyyy", new Locale("es", "ES")); /*/MMM/yyyy*/
-        formato.setTimeZone(TimeZone.getTimeZone("GMT+1"));
-        String fecha = formato.format(new Date());
-        return fecha;
+        LocalDate today = LocalDate.now(ZoneId.of("GMT+1"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d MMM yyyy", new Locale("es", "ES"));
+        String date = today.format(formatter);
+        return date;
     }
 
     public Schedule.WeekDay getWeekDay() {
-        SimpleDateFormat formato =
-                new SimpleDateFormat("EEEE");
-        formato.setTimeZone(TimeZone.getTimeZone("GMT+1"));
-        String fecha = formato.format(new Date()).toUpperCase();
-        return Schedule.WeekDay.valueOf(fecha);
+        LocalDate today = LocalDate.now(ZoneId.of("GMT+1"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE");
+        String date = today.format(formatter).toUpperCase();
+        return Schedule.WeekDay.valueOf(date);
     }
 
 }

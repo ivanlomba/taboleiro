@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-            <div class="col-lg-6" th:if="${#lists.isEmpty(listaExamenes)}">
+            <div class="col-lg-6" th:if="${#lists.isEmpty(examList)}">
                 <div class="row-fluid">
                     <div class="page-header">
                         <h2>Próximos exámenes</h2>
@@ -49,7 +49,7 @@
                     <br/>
                 </div>
             </div>
-            <div class="col-lg-6" th:unless="${#lists.isEmpty(listaExamenes)}">
+            <div class="col-lg-6" th:unless="${#lists.isEmpty(examList)}">
                 <div class="row-fluid">
                     <div class="page-header">
                         <h2>Próximos exámenes</h2>
@@ -64,7 +64,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="viewTeacherTask : ${listaExamenes}">
+                            <tr th:each="viewTeacherTask : ${examList}">
                                 <td><span th:text="${viewTeacherTask.subjectName}">Matemáticas</span> -
                                     <span th:text="${viewTeacherTask.classGroupName}">1º ESO</span></td>
                                 <td><b><span th:text="${viewTeacherTask.taskName}">Examen Tema 2</span></b></td>
@@ -76,7 +76,7 @@
                     <br/>
                 </div>
             </div>
-            <div class="col-lg-6" th:if="!${#lists.isEmpty(listaTareas)}">
+            <div class="col-lg-6" th:if="!${#lists.isEmpty(taskList)}">
                 <div class="row-fluid">
                     <div class="page-header">
                         <h2>Próximas tareas</h2>
@@ -93,7 +93,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="viewTeacherTask : ${listaTareas}">
+                            <tr th:each="viewTeacherTask : ${taskList}">
                                 <td><span th:text="${viewTeacherTask.subjectName}">Matemáticas</span> -
                                     <span th:text="${viewTeacherTask.classGroupName}">1º ESO</span></td>
                                 <td><b><span th:text="${viewTeacherTask.taskName}">Examen Tema 2</span></b></td>
@@ -104,7 +104,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6" th:if="${#lists.isEmpty(listaTareas)}">
+            <div class="col-lg-6" th:if="${#lists.isEmpty(taskList)}">
                 <div class="page-header">
                     <h2>Próximas tareas</h2>
                     <ul class="nav nav-pills" role="tablist">

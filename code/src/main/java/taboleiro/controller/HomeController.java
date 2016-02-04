@@ -4,13 +4,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.RequestMethod;
-import taboleiro.controller.student.SelectedStudent;
 import taboleiro.controller.utils.SessionUtil;
 import taboleiro.model.domain.course.Schedule;
 import taboleiro.model.domain.course.ClassGroup;
@@ -65,7 +61,6 @@ public class HomeController {
             throws UserNotFoundException, ChildrenListNotFoundException {
 
         model.addAttribute("day", sessionUtil.getDay());
-        // New mail alert
         model.addAttribute("newMail", sessionUtil.getNewMail(request));
         model.addAttribute("schoolYearList", courseService.findVisibleSchoolYear());
         return "redirect:admin/message/inbox";
@@ -79,13 +74,10 @@ public class HomeController {
         Schedule.WeekDay today = sessionUtil.getWeekDay();
         model.addAttribute("day", sessionUtil.getDay());
         User u = userService.findUserByLoginName(request.getRemoteUser());
-        // Schedule
         model.addAttribute("todaySchedule", courseService.findTeacherScheduleAndWeekDay(u.getUserId(), today));
-        // New mail alert
         model.addAttribute("newMail", sessionUtil.getNewMail(request));
-        // Task list
-        model.addAttribute("listaTareas", subjectService.findTeacherTask(u.getUserId()).getContent());
-        model.addAttribute("listaExamenes", subjectService.findTeacherExam(u.getUserId()).getContent());
+        model.addAttribute("taskList", subjectService.findTeacherTask(u.getUserId()).getContent());
+        model.addAttribute("examList", subjectService.findTeacherExam(u.getUserId()).getContent());
         return "teacher/home";
     }
 
@@ -100,33 +92,28 @@ public class HomeController {
         User u = userService.findUserByLoginName(request.getRemoteUser());
         String userName = u.getFirstName()+" "+u.getLastName();
         model.addAttribute("userName", userName);
-        // New mail alert
         model.addAttribute("newMail", sessionUtil.getNewMail(request));
-        // Children
         Student student = sessionUtil.getCurrentChild(request);
         model.addAttribute("student", student);
         model.addAttribute("childrenList", userService.listChildren(u));
-        // Task list
         ClassGroup classGroup = courseService.findClassGroupById(student.getCurrentClassGroup().getClassGroupId());
         Page <Task> taskList = subjectService.findProjectAndHomework(new PageRequest(0, 5), classGroup.getClassGroupId());
         Page <Task> examList = subjectService.findExams(new PageRequest(0, 5), classGroup.getClassGroupId());
         model.addAttribute("taskList", taskList.getContent());
         model.addAttribute("examList", examList.getContent());
-        // Attendance alert (not justified)
         model.addAttribute("NewAttendance", subjectService.countAttendanceByStudentNotJustified(student.getStudentId()));
-        // Schedule of the day
         model.addAttribute("todaySchedule", courseService.findStudentScheduleByGroupAndWeekDay(
                 classGroup.getClassGroupId(), today));
         return "family/home";
     }
 
     @Secured("USER")
-    @RequestMapping(value = "/family/setStudent", method = RequestMethod.POST)
-    public String setStudent(HttpServletRequest request, SelectedStudent form)
+    @RequestMapping(value = "/family/setStudent/{studentId}", method = RequestMethod.POST)
+    public String setStudent(HttpServletRequest request, @PathVariable("studentId") Long studentId)
             throws ChildrenListNotFoundException,
             UserNotFoundException, StudentNotFoundException {
 
-        Student student = studentService.findStudentById(form.getStudentId());
+        Student student = studentService.findStudentById(studentId);
         request.getSession().setAttribute("child", student);
         return "redirect:/family/home";
     }

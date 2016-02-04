@@ -55,11 +55,11 @@ public class CourseServiceTest {
 
         // Courses PRIMARIA
         Course p1 = courseService.addCourse("1º EP", Course.CourseLevel.PRIMARIA);
-        Course p2 = courseService.addCourse("2º EP", Course.CourseLevel.PRIMARIA);
+        courseService.addCourse("2º EP", Course.CourseLevel.PRIMARIA);
 
         // Courses SECUNDARIA
-        Course s1 = courseService.addCourse("1º ESO", Course.CourseLevel.SECUNDARIA);
-        Course s2 = courseService.addCourse("2º ESO", Course.CourseLevel.SECUNDARIA);
+        courseService.addCourse("1º ESO", Course.CourseLevel.SECUNDARIA);
+        courseService.addCourse("2º ESO", Course.CourseLevel.SECUNDARIA);
         Course s4 = courseService.addCourse("4º ESO", Course.CourseLevel.SECUNDARIA);
 
         courseService.addSchoolYear("2013-2014");
@@ -70,17 +70,17 @@ public class CourseServiceTest {
         User father = userService.createUser("picasso", "Pablo", "Picasso", "guernica", "", "", User.Role.USER);
 
         // ClassGroups PRIMARIA
-        ClassGroup gp1a = courseService.addClassGroup("1º EP A", p1.getCourseId(), u, sy.getSchoolYearId(), "g00001");
-        ClassGroup gp1b = courseService.addClassGroup("1º EP B", p1.getCourseId(), u, sy.getSchoolYearId(), "g00002");
+        courseService.addClassGroup("1º EP A", p1.getCourseId(), u, sy.getSchoolYearId(), "g00001");
+        courseService.addClassGroup("1º EP B", p1.getCourseId(), u, sy.getSchoolYearId(), "g00002");
 
         // ClassGroups SECUDARIA
         ClassGroup gs4c = courseService.addClassGroup("4º ESO Ciencias", s4.getCourseId(), u2, sy.getSchoolYearId(), "g00003");
-        ClassGroup gs4l = courseService.addClassGroup("4º ESO Letras", s4.getCourseId(), u2, sy.getSchoolYearId(), "g00004");
+        courseService.addClassGroup("4º ESO Letras", s4.getCourseId(), u2, sy.getSchoolYearId(), "g00004");
 
         // Subjects PRIMARIA
-        Subject sbp1 = subjectService.addSubject("Matemáticas", p1.getCourseId(), "MA001");
-        Subject sbp2 = subjectService.addSubject("Inglés", p1.getCourseId(), "MA002");
-        Subject sbp3 = subjectService.addSubject("Lingua Galega", p1.getCourseId(), "MA003");
+        subjectService.addSubject("Matemáticas", p1.getCourseId(), "MA001");
+        subjectService.addSubject("Inglés", p1.getCourseId(), "MA002");
+        subjectService.addSubject("Lingua Galega", p1.getCourseId(), "MA003");
 
         // Subjects SECUNDARIA
         Subject sbs1 = subjectService.addSubject("Matemáticas", s4.getCourseId(), "MA004");
@@ -88,20 +88,16 @@ public class CourseServiceTest {
         Subject sbs3 = subjectService.addSubject("Inglés", s4.getCourseId(), "MA006");
         Subject sbs4 = subjectService.addSubject("Lingua Galega",s4.getCourseId(), "MA007");
 
-        ClassHourLevel cHPrimaria1 = courseService.addClassHourLevel(Course.CourseLevel.PRIMARIA,
-                ClassHourLevel.ClassHour.FIRST_HOUR,
+        courseService.addClassHourLevel(Course.CourseLevel.PRIMARIA, ClassHourLevel.ClassHour.FIRST_HOUR,
                 "10:00", "11:00");
-        ClassHourLevel cHPrimaria2 = courseService.addClassHourLevel(Course.CourseLevel.PRIMARIA,
-                ClassHourLevel.ClassHour.SECOND_HOUR,
+        courseService.addClassHourLevel(Course.CourseLevel.PRIMARIA, ClassHourLevel.ClassHour.SECOND_HOUR,
                 "11:00", "12:00");
-        ClassHourLevel cHPrimaria3 = courseService.addClassHourLevel(Course.CourseLevel.PRIMARIA,
-                ClassHourLevel.ClassHour.THIRD_HOUR,
+        courseService.addClassHourLevel(Course.CourseLevel.PRIMARIA, ClassHourLevel.ClassHour.THIRD_HOUR,
                 "12:30", "13:30");
-        ClassHourLevel cHPrimaria4 = courseService.addClassHourLevel(Course.CourseLevel.PRIMARIA,
-                ClassHourLevel.ClassHour.FOURTH_HOUR,
+        courseService.addClassHourLevel(Course.CourseLevel.PRIMARIA, ClassHourLevel.ClassHour.FOURTH_HOUR,
                 "15:30", "16:30");
 
-        // SECUNDARIA Class Hour
+        // Class Hour Level
         ClassHourLevel cHSecundaria1 = courseService.addClassHourLevel(Course.CourseLevel.SECUNDARIA,
                 ClassHourLevel.ClassHour.FIRST_HOUR,
                 "9, 00", "10, 00");
@@ -120,7 +116,7 @@ public class CourseServiceTest {
         courseService.addGroupSubject(gs4c, sbs3, u2);
         courseService.addGroupSubject(gs4c, sbs4, u);
 
-        // SECUNDARIA Schedule
+        // Schedules
         courseService.addSchedule(gs4c, sbs1, Schedule.WeekDay.MONDAY, cHSecundaria1);
         courseService.addSchedule(gs4c, sbs2, Schedule.WeekDay.MONDAY, cHSecundaria2);
         courseService.addSchedule(gs4c, sbs3, Schedule.WeekDay.MONDAY, cHSecundaria3);
@@ -451,7 +447,7 @@ public class CourseServiceTest {
         Course c5 = courseService.addCourse("5º ESO", Course.CourseLevel.SECUNDARIA);
         SchoolYear sy = courseService.findSchoolYearBySchoolYearName("2014-2015");
         ClassGroup cg5 = courseService.addClassGroup("5º ESO", c5.getCourseId(), u2 , sy.getSchoolYearId(), "4556677");
-        Student st2 = studentService.addStudent("Leonardo","Davinci","16101123A", LocalDate.of(2008, Month.JULY, 2),
+        studentService.addStudent("Leonardo","Davinci","16101123A", LocalDate.of(2008, Month.JULY, 2),
                 u.getUserId(), cg5.getClassGroupId());
         Student st3 = studentService.addStudent("Isaac", "Newton", "46101123D", LocalDate.of(2007, Month.DECEMBER, 25),
                 u.getUserId() , cg5.getClassGroupId());
@@ -714,10 +710,10 @@ public class CourseServiceTest {
         SchoolYear sy = courseService.addSchoolYear("2018-2019");
         User u1 = userService.findUserByLoginName("mcervantes");
         ClassGroup cg = courseService.addClassGroup("6º EP A", c1.getCourseId(), u1, sy.getSchoolYearId(), "");
-        ClassGroup cg2 = courseService.addClassGroup("6º EP B", c1.getCourseId(), u1, sy.getSchoolYearId(), "");
+        courseService.addClassGroup("6º EP B", c1.getCourseId(), u1, sy.getSchoolYearId(), "");
         Subject s1 = subjectService.addSubject("Química", c1.getCourseId(), "MA211S1");
-        Subject s2 = subjectService.addSubject("Física", c1.getCourseId(), "MA2211W");
-        Subject s3 = subjectService.addSubject("Tecnología", c1.getCourseId(), "MA32323R");
+        subjectService.addSubject("Física", c1.getCourseId(), "MA2211W");
+        subjectService.addSubject("Tecnología", c1.getCourseId(), "MA32323R");
         User u = userService.createUser("melville", "Herman", "Melville", "mobydick", "", "", User.Role.TEACHER);
         User u2 = userService.createUser("steinbeck", "John", "Steinbeck", "perla", "", "", User.Role.TEACHER);
         GroupSubject gs = courseService.addGroupSubject(cg,s1,u);

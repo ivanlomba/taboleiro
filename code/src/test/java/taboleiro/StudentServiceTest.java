@@ -65,9 +65,9 @@ public class StudentServiceTest {
         Course c2 = courseService.addCourse("2º ESO", Course.CourseLevel.SECUNDARIA);
 
         // AddSubjects to de courses
-        Subject subject1 = subjectService.addSubject("Matematicas", c1.getCourseId(), "MA00012");
-        Subject subject2 = subjectService.addSubject("Ingles", c1.getCourseId(), "MA00013");
-        Subject subject3 = subjectService.addSubject("Galego", c1.getCourseId(), "MA00015");
+        subjectService.addSubject("Matematicas", c1.getCourseId(), "MA00012");
+        subjectService.addSubject("Ingles", c1.getCourseId(), "MA00013");
+        subjectService.addSubject("Galego", c1.getCourseId(), "MA00015");
 
         // Add ClassGroups
         ClassGroup cg1 = courseService.addClassGroup("1º ESO - A", c1.getCourseId(), t, sy1.getSchoolYearId(), "");
@@ -228,9 +228,6 @@ public class StudentServiceTest {
             CourseNotFoundException, SubjectNotFoundException, DuplicateGlobalGradeException,
             GlobalGradeNotFoundException, DuplicateGlobalGradeLevelException {
 
-        Student s1 = studentService.findStudentByDni("56302123T");
-        SchoolYear sy1 = courseService.findSchoolYearBySchoolYearName("2019-2020");
-        Subject subject1 = subjectService.findSubjectBySubjectNameAndCourseName("Matematicas", "1º ESO");
         studentService.addGlobalGradeLevel("5", "Suficiente", "c-5",
                 Course.CourseLevel.SECUNDARIA);
         studentService.addGlobalGradeLevel("5", "Suficiente", "c-5",
@@ -293,8 +290,8 @@ public class StudentServiceTest {
 
     @Test
     public void findByGlobalGradeIdTest() throws StudentNotFoundException, SchoolYearNotFoundException,
-    CourseNotFoundException, SubjectNotFoundException, DuplicateGlobalGradeException,
-    GlobalGradeNotFoundException, DuplicateGlobalGradeLevelException {
+            CourseNotFoundException, SubjectNotFoundException, DuplicateGlobalGradeException,
+            GlobalGradeNotFoundException, DuplicateGlobalGradeLevelException {
 
         Student s1 = studentService.findStudentByDni("56302123T");
         SchoolYear sy1 = courseService.findSchoolYearBySchoolYearName("2019-2020");

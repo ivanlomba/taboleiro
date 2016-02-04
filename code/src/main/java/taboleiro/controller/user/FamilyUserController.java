@@ -47,21 +47,21 @@ public class FamilyUserController {
         Set<Student> childrenList = userService.listChildren(u);
         model.addAttribute("childrenList", childrenList);
         model.addAttribute("user", u);
-        //faltas sin justificar
         Integer attendanceNumber = subjectService.countAttendanceByStudentNotJustified(student.getStudentId());
         model.addAttribute("NewAttendance", attendanceNumber);
-        //mensajes sin leer
         Integer newMail = messageService.countNewMail(u.getUserId());
         model.addAttribute("newMail", newMail);
         return "family/user/myprofile";
     }
 
     @RequestMapping(value = "/editMyProfile", method = RequestMethod.POST)
-    public String editMyProfile(HttpServletRequest request, @Valid MyProfileForm form, Model model) throws UserNotFoundException {
+    public String editMyProfile(HttpServletRequest request, @Valid MyProfileForm form, Model model)
+            throws UserNotFoundException {
         User u = userService.findUserByLoginName(request.getRemoteUser());
         model.addAttribute("user", u);
         model.addAttribute("form", form);
-        userService.editUser(u.getUserId(), form.getFirstName(), form.getLastName(), form.getEmail(), form.getPhoneNumber());
+        userService.editUser(u.getUserId(), form.getFirstName(), form.getLastName(), form.getEmail(),
+                form.getPhoneNumber());
         return "redirect:/family/user/myprofile";
     }
 
@@ -72,5 +72,4 @@ public class FamilyUserController {
         userService.changePassword(userId, psswdForm.getPassword());
         return "redirect:/family/user/myprofile";
     }
-
 }

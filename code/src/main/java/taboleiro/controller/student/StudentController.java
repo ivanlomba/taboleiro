@@ -144,10 +144,9 @@ public class StudentController {
         else {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate date = LocalDate.parse(form.getBirthDate(), formatter);
-            studentService.updateStudent(studentId, form.getFirstName(), form.getLastName(), form.getDni(),
-                    date, form.getGuardian().getUserId(), form.getCurrentClassGroup().getClassGroupId(), form.getCodigoAlumno());
+            studentService.updateStudent(studentId, form.getFirstName(), form.getLastName(), form.getDni(), date,
+                    form.getGuardian().getUserId(), form.getCurrentClassGroup().getClassGroupId(), form.getCodigoAlumno());
             return "redirect:/admin/student/list";
         }
     }
-
 }

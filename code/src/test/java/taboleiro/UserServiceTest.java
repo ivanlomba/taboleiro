@@ -31,7 +31,7 @@ public class UserServiceTest {
     public void findUserById() throws UserNotFoundException, DuplicateUserException {
         User user = userService.createUser("jktoole", "John", "K Toole", "necios", "", "", User.Role.USER);
         userService.createUser("hmelville", "Herman", "Melville", "mobydick", "", "", User.Role.TEACHER);
-        userService.findUserByUserId(user.getUserId()).equals(user);
+        assertThat(userService.findUserByUserId(user.getUserId())).isEqualTo(user);
     }
 
     @Test (expected = UserNotFoundException.class)

@@ -15,7 +15,7 @@ public class UserPasswordForm {
     @NotEmpty
     private String password;
 
+    @NotEmpty
     private String repeatPassword;
-
 
 }

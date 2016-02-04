@@ -77,7 +77,7 @@ public class SubjectServiceTest {
         subjectService.addSubject("Lingua Galega",c2.getCourseId(), "MA111114");
         Subject s1 = subjectService.addSubject("Matemáticas", c1.getCourseId(), "MA11115");
         Subject s2 = subjectService.addSubject("Inglés",c1.getCourseId(), "MA11116");
-        Subject s3 = subjectService.addSubject("Lingua Galega",c1.getCourseId(), "Ma11117");
+        subjectService.addSubject("Lingua Galega",c1.getCourseId(), "Ma11117");
         Student student1 = studentService.addStudent("Charles", "Darwin", "11101123C", LocalDate.of(2009, Month.MAY, 5),
                 u2.getUserId(), cg2.getClassGroupId());
         Student student2 = studentService.addStudent("Isaac", "Newton", "46101123D", LocalDate.of(2007, Month.DECEMBER,
@@ -271,7 +271,7 @@ public class SubjectServiceTest {
 
     @Test
     public void notJustifiedAttendanceTest() throws AttendanceNotFoundException, StudentNotFoundException,
-    SubjectNotFoundException, CourseNotFoundException, DuplicateAttendanceException {
+            SubjectNotFoundException, CourseNotFoundException, DuplicateAttendanceException {
         Student st1 = studentService.findStudentByDni("11101123C");
         Subject sb1 = subjectService.findSubjectBySubjectNameAndCourseName("Matemáticas", "1º EP");
         Attendance att = subjectService.addAttendance(st1, sb1, LocalDate.of(2019, Month.JUNE, 15),
@@ -386,7 +386,7 @@ public class SubjectServiceTest {
 
     @Test
     public void findPendingTaskByClassGroupTest() throws DuplicateTaskException, TaskNotFoundException,
-    ClassGroupNotFoundException,  SubjectNotFoundException, CourseNotFoundException {
+            ClassGroupNotFoundException,  SubjectNotFoundException, CourseNotFoundException {
         ClassGroup cg = courseService.findClassGroupByClassGroupName("4º ESO Ciencias");
         Subject sb1 = subjectService.findSubjectBySubjectNameAndCourseName("Matemáticas", "4º ESO");
         subjectService.addTask("Examen Recuperacion: Ev.1", LocalDate.of(2020, Month.MAY, 25),
@@ -476,8 +476,8 @@ public class SubjectServiceTest {
 
     @Test
     public void findGradeByTaskAndStudentTest() throws DuplicateTaskException, TaskNotFoundException,
-    ClassGroupNotFoundException, SubjectNotFoundException, StudentNotFoundException,
-    DuplicateGradeException, GradeNotFoundException, CourseNotFoundException {
+            ClassGroupNotFoundException, SubjectNotFoundException, StudentNotFoundException,
+            DuplicateGradeException, GradeNotFoundException, CourseNotFoundException {
 
         Student student1 = studentService.findStudentByDni("46101123D");
         Subject sb1 = subjectService.findSubjectBySubjectNameAndCourseName("Matemáticas", "1º EP");
