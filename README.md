@@ -4,6 +4,10 @@ Taboleiro is a school management and communication web application.
 
 This was an university project, any feedback will be appreciated and I will improve the project gradually.
 
+### Demo
+
+You can see a demostration video on Vimeo: [Taboleiro demo](https://vimeo.com/153252314).
+
 ### Requirements
 
 To add flexibility during developement the application is packed with Docker.
@@ -48,9 +52,6 @@ Admin:
 login name: newton
 password: gravitacion
 ```
-### Demo
-
-Demo video: [demo_taboleiro](https://vimeo.com/153252314)
 
 ### License
 
