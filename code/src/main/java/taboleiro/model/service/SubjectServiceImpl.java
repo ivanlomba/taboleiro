@@ -125,7 +125,7 @@ public class SubjectServiceImpl implements SubjectService {
         s.setSubjectName(form.getSubjectName());
         s.setCourse(form.getCourse());
         s.setCodigoMateriaAvaliable(form.getCodigoMateriaAvaliable());
-        return subjectRepository.save(s);
+        return s;
     }
 
     @Transactional
@@ -265,7 +265,6 @@ public class SubjectServiceImpl implements SubjectService {
         }
         else {
             att.setJustified(true);
-            attendanceRepository.save(att);
         }
     }
 
@@ -499,7 +498,7 @@ public class SubjectServiceImpl implements SubjectService {
             task.setTaskType(form.getTaskType());
             task.setTaskDate(date);
             task.setTaskName(form.getTaskName());
-            return taskRepository.save(task);
+            return task;
         }
     }
 
@@ -644,7 +643,7 @@ public class SubjectServiceImpl implements SubjectService {
         } else {
             grade.setGrade(newGrade);
             grade.setObservation(newObservation);
-            return gradeRepository.save(grade);
+            return grade;
         }
     }
 }

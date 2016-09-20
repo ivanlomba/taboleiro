@@ -131,7 +131,6 @@ public class MessageServiceImpl implements MessageService {
         }
         else if(m.getCopy().getUserId().equals(userId)) {
             m.setViewed(true);
-            messageRepository.save(m);
             return m;
         }
         else { // if the message is not property of the current user
@@ -145,7 +144,6 @@ public class MessageServiceImpl implements MessageService {
         checkNotNull(userId, "userId");
 
         return messageRepository.findMessageByAddresseeAndCopyOrderByMessageDateDesc(page, userId, userId);
-
     }
 
     @Override
@@ -154,7 +152,6 @@ public class MessageServiceImpl implements MessageService {
         checkNotNull(userId, "userId");
 
         return messageRepository.findMessageBySenderAndCopyOrderByMessageDateDesc(page, userId, userId);
-
     }
 
     @Override
@@ -190,7 +187,6 @@ public class MessageServiceImpl implements MessageService {
         }
         else {
             m.setViewed(false);
-            messageRepository.save(m);
         }
     }
 

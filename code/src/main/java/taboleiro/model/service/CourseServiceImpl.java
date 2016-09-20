@@ -158,7 +158,7 @@ public class CourseServiceImpl implements CourseService {
         else {
             c.setCourseLevel(courseForm.getCourseLevel());
             c.setCourseName(courseForm.getCourseName());
-            return courseRepository.save(c);
+            return c;
         }
     }
 
@@ -231,7 +231,6 @@ public class CourseServiceImpl implements CourseService {
         }
         else {
             sy.setVisible(true);
-            schoolYearRepository.save(sy);
         }
     }
 
@@ -247,7 +246,6 @@ public class CourseServiceImpl implements CourseService {
         }
         else {
             sy.setVisible(false);
-            schoolYearRepository.save(sy);
         }
     }
 
@@ -355,7 +353,6 @@ public class CourseServiceImpl implements CourseService {
 
         ClassGroup classGroup = classGroupRepository.findClassGroupByClassGroupId(classGroupId);
         classGroup.setTutor(tutor);
-        classGroupRepository.save(classGroup);
     }
 
     @Transactional
@@ -374,7 +371,7 @@ public class CourseServiceImpl implements CourseService {
         cl.setTutor(tutor);
         cl.setSchoolYear(schoolYear);
         cl.setCodigoGrupo(codigoGrupo);
-        return classGroupRepository.save(cl);
+        return cl;
     }
 
     @Transactional
@@ -581,7 +578,7 @@ public class CourseServiceImpl implements CourseService {
         else {
             gs.setSubject(form.getSubject());
             gs.setTeacher(form.getTeacher());
-            return groupSubjectRepository.save(gs);
+            return gs;
         }
     }
 

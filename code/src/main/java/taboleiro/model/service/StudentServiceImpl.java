@@ -144,7 +144,7 @@ public class StudentServiceImpl implements StudentService {
         student.getClassGroups().add(classGroup);
         student.setCourse(classGroup.getCourse());
         student.setCodigoAlumno(codigoAlumno);
-        return studentRepository.save(student);
+        return student;
     }
 
 
@@ -159,7 +159,7 @@ public class StudentServiceImpl implements StudentService {
             throw new StudentNotFoundException(studentId, Student.class.getName());
         } else {
             student.setCourse(courseService.findCourseById(courseId));
-            return studentRepository.save(student);
+            return student;
         }
     }
 
@@ -174,7 +174,7 @@ public class StudentServiceImpl implements StudentService {
         student.setCourse(classGroup.getCourse());
         Set<ClassGroup> classGroupList = student.getClassGroups();
         classGroupList.add(classGroup);
-        return studentRepository.save(student);
+        return student;
     }
 
     @Transactional
@@ -192,7 +192,7 @@ public class StudentServiceImpl implements StudentService {
             classGroupList.remove(classGroup);
         }
 
-        return studentRepository.save(student);
+        return student;
     }
 
     @Transactional
@@ -315,7 +315,7 @@ public class StudentServiceImpl implements StudentService {
             throw new GlobalGradeNotFoundException(globalGradeId, "GlobalGrade");
         } else {
             gg.setGrade(grade);
-            return globalGradeRepository.save(gg);
+            return gg;
         }
     }
 
