@@ -24,13 +24,9 @@ public class XadeConverter {
         List<GlobalGrade> gradeList = studentService.findGlobalGradeByGroupSubjectAndEvaluation(
                 groupSubject.getGroupSubjectId(), evaluation);
         List<XadeStudent> xadeStudentList = new ArrayList<XadeStudent>();
-        Iterator<Student> iterator = studentList.iterator();
-        while(iterator.hasNext()) {
-            Student studentListElement = iterator.next();
-            Iterator<GlobalGrade> gradeIterator = gradeList.iterator();
+        for (Student studentListElement : studentList) {
             String grade = "";
-            while(gradeIterator.hasNext()){
-                GlobalGrade gradeListElement = gradeIterator.next();
+            for (GlobalGrade gradeListElement : gradeList) {
                 if(gradeListElement.getStudent().getStudentId().equals(studentListElement.getStudentId())) {
                     grade = gradeListElement.getGrade().getXadeGrade();
                 }

@@ -344,15 +344,11 @@ public class StudentServiceImpl implements StudentService {
                 .getClassGroupId());
         List<GlobalGrade> globalGradeList = globalGradeRepository.findGlobalGradeBySubjectAndSchoolYear(
                 gs.getSubject().getSubjectId(), gs.getClassGroup().getSchoolYear().getSchoolYearId());
-        Iterator studentIterator = studentList.iterator();
-        while(studentIterator.hasNext()) {
-            Iterator globalGradeIterator = globalGradeList.iterator();
-            Student student = (Student)studentIterator.next();
+        for (Student student : studentList) {
             String globalGradeEv1 = "";
             String globalGradeEv2 = "";
             String globalGradeEv3 = "";
-            while(globalGradeIterator.hasNext()) {
-                GlobalGrade globalGrade = (GlobalGrade)globalGradeIterator.next();
+            for (GlobalGrade globalGrade : globalGradeList) {
                 if(globalGrade.getStudent().getStudentId().equals(student.getStudentId())) {
                     if(globalGrade.getEvaluation().equals(Evaluation.FIRST)){
                         globalGradeEv1 = globalGrade.getGrade().getGrade();

@@ -102,17 +102,13 @@ public class MessageServiceImpl implements MessageService {
         LocalDateTime date = LocalDateTime.now(ZoneId.of("GMT+1"));
         ClassGroup cg = courseService.findClassGroupById(form.getClassGroup());
         Set<Student> studentList = cg.getStudentList();
-        Iterator studentIterator = studentList.iterator();
         Set<User> addresseeList = new HashSet<>();
-        while(studentIterator.hasNext()) {
-            Student s = (Student)studentIterator.next();
+        for(Student s : studentList) {
             addresseeList.add(s.getGuardian());
         }
-        Iterator addresseeIterator = addresseeList.iterator();
-        while(addresseeIterator.hasNext()) {
-            User addressee = (User)addresseeIterator.next();
+        for(User u : addresseeList) {
             Message addresseeMessage = Message.builder()
-                    .addressee(addressee).sender(sender).copy(addressee)
+                    .addressee(u).sender(sender).copy(u)
                     .subject(form.getSubject())
                     .message(form.getMessage())
                     .viewed(false).messageDate(date).build();

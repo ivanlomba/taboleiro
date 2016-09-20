@@ -109,7 +109,6 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserId(checkNotNull(userId, "userId"));
         String encryptedPassword = PasswordEncoderGenerator.Encode(checkNotNull(newPassword, "newPassword"));
         user.setPassword(checkNotNull(encryptedPassword, "encryptedPassword"));
-        userRepository.save(user);
     }
 
     @Transactional
@@ -142,7 +141,7 @@ public class UserServiceImpl implements UserService {
         u.setEmail(email);
         u.setPhoneNumber(phoneNumber);
         u.setRole(role);
-        return userRepository.save(u);
+        return u;
     }
 
 
@@ -155,7 +154,7 @@ public class UserServiceImpl implements UserService {
         u.setLastName(lastName);
         u.setEmail(email);
         u.setPhoneNumber(phoneNumber);
-        return userRepository.save(u);
+        return u;
     }
 
 }

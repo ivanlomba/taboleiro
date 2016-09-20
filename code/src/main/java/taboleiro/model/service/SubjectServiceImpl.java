@@ -77,7 +77,6 @@ public class SubjectServiceImpl implements SubjectService {
         checkNotNull(courseName, "CourseName");
 
         Course c = courseService.findCourseByCourseName(courseName);
-
         Subject s = subjectRepository.findSubjectBySubjectNameAndCourse(subjectName, c.getCourseId());
         if (s == null) {
             throw new SubjectNotFoundException(subjectName, "subjectName");
@@ -303,17 +302,12 @@ public class SubjectServiceImpl implements SubjectService {
         List<Attendance> attendanceList = attendanceRepository
                 .findAttendanceByClassGroupAndSubjectAndFaultDate(classGroup.getClassGroupId(), s.getSubjectId(),
                         faultDate);
-
         List<Student> studentList = studentService.findStudentByClassGroup(classGroup.getClassGroupId());
         List<StudentAttendance> attendanceToday = new ArrayList<>();
-        Iterator iter = studentList.iterator();
         String fault;
-        while (iter.hasNext()) {
-            Iterator attIter = attendanceList.iterator();
-            Student student = (Student)iter.next();
+        for (Student student : studentList) {
             fault = "false";
-            while(attIter.hasNext()) {
-                Attendance attendance = (Attendance)attIter.next();
+            for(Attendance attendance : attendanceList) {
                 if (attendance.getStudent().getStudentId().equals(student.getStudentId())) {
                     fault = attendance.getFaultType().toString();
                 }
@@ -526,16 +520,12 @@ public class SubjectServiceImpl implements SubjectService {
         List<Student> studentList = studentService.findStudentByClassGroup(cg.getClassGroupId());
         List<Grade> gradeList = gradeRepository.findGradeByTask(t.getTaskId());
         List<StudentTaskGrade> studentTaskGradeList = new ArrayList<>();
-        Iterator iter = studentList.iterator();
         Integer studentGrade;
-        while (iter.hasNext()) {
-            Student student = (Student)iter.next();
+        for (Student student : studentList) {
             studentGrade = -1;
-            Iterator gradeIter = gradeList.iterator();
-            while (gradeIter.hasNext()) {
-                Grade grade = (Grade)gradeIter.next();
-                if(student.equals(grade.getStudent())) {
-                    studentGrade = grade.getGrade();
+            for (Grade g : gradeList) {
+                if(student.equals(g.getStudent())) {
+                    studentGrade = g.getGrade();
                 }
             }
             StudentTaskGrade studentTaskGrade = new StudentTaskGrade(student.getStudentId(), student.getFirstName(),

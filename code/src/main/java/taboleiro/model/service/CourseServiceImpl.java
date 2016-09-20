@@ -15,7 +15,6 @@ import taboleiro.model.domain.user.User;
 import taboleiro.model.domain.student.Student;
 import taboleiro.model.exception.*;
 import taboleiro.model.repository.course.*;
-import taboleiro.model.repository.student.StudentRepository;
 import taboleiro.model.exception.SchoolYearNotFoundException;
 import taboleiro.model.exception.ClassGroupNotFoundException;
 import taboleiro.controller.course.CourseCreateForm;
@@ -621,10 +620,8 @@ public class CourseServiceImpl implements CourseService {
         }
         else {
             List<GroupSubject> groupSubjectList = groupSubjectRepository.findByClassGroup(cg.getClassGroupId());
-            Iterator groupSubjectIterator = groupSubjectList.iterator();
             Set<User> teacherList = new HashSet<>();
-            while(groupSubjectIterator.hasNext()) {
-                GroupSubject gs = (GroupSubject)groupSubjectIterator.next();
+            for (GroupSubject gs : groupSubjectList) {
                 teacherList.add(gs.getTeacher());
             }
             return teacherList;
